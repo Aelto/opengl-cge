@@ -1,0 +1,121 @@
+#pragma once
+
+#define GLEW_STATIC
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <glm\glm.hpp>
+#include "glm/gtc/matrix_transform.hpp"
+
+#include <unordered_map>
+#include <vector>
+
+namespace wip {
+
+	struct Vertex {
+		GLfloat x;
+		GLfloat y;
+		GLfloat uvX;
+		GLfloat uvY;
+	};
+
+	class Glyph {
+		public:
+		Glyph( GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLuint _textureID );
+
+		Vertex topLeft;
+		Vertex topRight;
+		Vertex bottomRight;
+		Vertex bottomLeft;
+
+		GLuint textureID;
+	};
+
+	class GlyphBatch {
+		public:
+		GlyphBatch( GLuint _textureID, GLuint _verticesNumber, GLuint _offset )
+			: textureID( _textureID ), verticesNumber( _verticesNumber ), offset( _offset )
+		{}
+
+		GLuint textureID;
+		GLuint verticesNumber;
+		GLuint offset;
+	};
+
+	class SpriteBatch {
+		public:
+		SpriteBatch();
+
+		/// props
+
+		/**
+		 * A list of Glyphs which contain 4 vertices each
+		 * 
+		 */
+		std::vector<Glyph> glyphs;
+
+		/**
+		* A list of pointers of the Glyphs in this->glyphs
+		* Allows fast sorting without moving huge sets of data
+		*/
+		std::vector<Glyph *> glyphs_map;
+
+		/**
+		 * A list of glyphBatches that will be used when rendering
+		 */
+		std::vector<GlyphBatch> glyphBatches;
+
+		/**
+		 * Stores the id of the VAO the SpriteBatch uses
+		 */
+		GLuint quadVAO;
+
+		/**
+		 * Stores the id of the VAO used by the SpriteBatch
+		 */
+		GLuint quadVBO;
+
+		/// methods
+
+		/**
+		 *
+		 *
+		 */
+		void createVAO();
+
+		/**
+		 * Copy a glyph into the this->glyphs vector
+		 * this is not the recommended way to add a glyph
+		 */
+		void addGlyph( Glyph newGlyph );
+
+		/**
+		 * Get a set of data and emplace_back a Glyph into this->glyphs
+		 * vector with this data as parameter
+		 */
+		void draw( GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLuint textureID );
+
+		/**
+		 * Set up everything to begin the spritebatch collecting
+		 */
+		void begin();
+
+		/**
+		 * Set up everything for the this->render();
+		 * Upload the data with the VBO
+		 */
+		void end();
+
+		/**
+		 * Uses 
+		 */
+		void render();
+
+		void sortGlyphs();
+
+		void createGlyphBatches();
+
+		static bool compareTexture( Glyph* a, Glyph* b );
+
+	};
+
+}
