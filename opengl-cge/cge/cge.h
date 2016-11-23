@@ -13,3 +13,4 @@
 #include "core\Texture.h"
 
 #include "core\SpriteBatch.h"
+#include "core\RenderObject.h"

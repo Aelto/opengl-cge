@@ -57,6 +57,9 @@ int main( int argc, char *argv[] ) {
 	glm::vec3 color(1.0f, 1.0f, 1.0f);
 	glm::vec2 position(0.0f, 0.0f);
 
+	cge::RenderObject circle(glm::vec2(0.0f, 0.0f), glm::vec2(50.0f, 50.0f), &circleTexture);
+	cge::RenderObject circle_2(glm::vec2(200.0f, 200.0f), glm::vec2(20.0f, 20.0f), &circleTexture);
+
 	cgeShader.SetVector3f("spriteColor", color);
 	cgeShader.SetMatrix4("view", camera.view);
 
@@ -65,24 +68,20 @@ int main( int argc, char *argv[] ) {
 		// std::cout << 1 / helper.getDelta() << '\n';
 		delta = helper.getDelta();
 
+		// beginning of the drawing process
 		app.startLoop();
-
-		
-
 		cgeShader.Use(); 
-		
-
 		batch.begin();
 
-		for ( int i = 0; i < 1; i++ )
-			batch.draw( position.x, position.y, size.x, size.y, circleTexture.ID );
+		circle.batchDraw(batch);
+		circle_2.batchDraw(batch);
 
 		batch.end();
-
 		batch.render();
-		camera.updateView();
-		
 
+		camera.updateView();
+
+		// end of the drawing process
 		app.endLoop();
 
 	}
