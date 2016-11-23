@@ -11,10 +11,10 @@ namespace cge {
 		helper();
 		~helper();
 
-		// variables
-		GLfloat lastFrame;
+		/// props
+		double lastFrame;
 
-		// methods
+		/// methods
 		GLfloat getDelta();
 	};
 }

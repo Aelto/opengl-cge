@@ -1,22 +1,22 @@
 #include "helper.h"
 
+namespace cge {
 
+	helper::helper() {
 
-cge::helper::helper()
-{
-	lastFrame = glfwGetTime();
-}
+		lastFrame = glfwGetTime();
 
+	}
 
-cge::helper::~helper()
-{
-}
+	helper::~helper() {}
 
-GLfloat cge::helper::getDelta() {
+	GLfloat helper::getDelta() {
 
-	GLfloat _lastFrame = lastFrame;
-	lastFrame = glfwGetTime();
+		GLfloat _lastFrame = lastFrame;
+		lastFrame = glfwGetTime();
 
-	return lastFrame - _lastFrame;
+		return lastFrame - _lastFrame;
+
+	}
 
 }

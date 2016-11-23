@@ -1,9 +1,9 @@
-#include "spriteBatch.h"
+#include "SpriteBatch.h"
 
 #include <algorithm>
 #include <iostream>
 
-namespace wip {
+namespace cge {
 
 	/// Glyph
 

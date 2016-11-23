@@ -9,7 +9,7 @@
 #include <unordered_map>
 #include <vector>
 
-namespace wip {
+namespace cge {
 
 	struct Vertex {
 		GLfloat x;

@@ -13,7 +13,7 @@ namespace cge {
 		app( GLuint _width, GLuint _height );
 		~app();
 
-		// variables
+		/// props
 		GLuint width;
 		GLuint height;
 
@@ -25,7 +25,7 @@ namespace cge {
 		static void keyCallback_dispatch( GLFWwindow* window, int key, int scancode, int action, int mode );
 		void keyCallback( GLFWwindow* window, int key, int scancode, int action, int mode );
 
-		// methods
+		/// methods
 		void open( int GL_major, int GL_minor, const char * name );
 
 		int shouldClose();

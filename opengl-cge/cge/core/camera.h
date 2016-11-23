@@ -11,6 +11,8 @@ namespace cge {
 		Camera( GLuint width, GLuint height );
 		~Camera();
 
+		/// props
+
 		glm::vec3 Position, Velocity, Front, Up;
 		GLfloat Rotation, MovementSpeed;
 		GLuint Width, Height;
@@ -20,6 +22,8 @@ namespace cge {
 		glm::vec2 * followedPosition;
 		glm::vec2 anchor;
 		GLfloat followSpeed;
+
+		/// methods
 
 		void updateView();
 
