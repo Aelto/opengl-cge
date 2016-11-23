@@ -37,6 +37,9 @@ namespace cge {
 		velocity.x += acceleration.x;
 		velocity.y += acceleration.y;
 
+		acceleration.x = 0;
+		acceleration.y = 0;
+
 	}
 
 	void RenderObject::applyVelocity(const GLfloat delta) {

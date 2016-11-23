@@ -11,23 +11,23 @@ namespace cge {
 
 		// uses the top left corner as anchor
 
-		topLeft.x = x;
-		topLeft.y = y;
+		topLeft.x = x - width / 2.0f;
+		topLeft.y = y - height / 2.0f;
 		topLeft.uvX = 0.0f;
 		topLeft.uvY = 1.0f;
 
-		topRight.x = x + width;
-		topRight.y = y;
+		topRight.x = x + width / 2.0f;
+		topRight.y = y - height / 2.0f;
 		topRight.uvX = 1.0f;
 		topRight.uvY = 1.0f;
 
-		bottomLeft.x = x;
-		bottomLeft.y = y + height;
+		bottomLeft.x = x - width / 2.0f;
+		bottomLeft.y = y + height / 2.0f;
 		bottomLeft.uvX = 0.0f;
 		bottomLeft.uvY = 0.0f;
 
-		bottomRight.x = x + width;
-		bottomRight.y = y + height;
+		bottomRight.x = x + width / 2.0f;
+		bottomRight.y = y + height / 2.0f;
 		bottomRight.uvX = 1.0f;
 		bottomRight.uvY = 0.0f;
 
