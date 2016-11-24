@@ -12,9 +12,12 @@ namespace cge {
 		~helper();
 
 		/// props
-		double lastFrame;
+		GLfloat lastFrame;
+		GLfloat delta;
 
 		/// methods
 		GLfloat getDelta();
+
+		void coutFramerate();
 	};
 }

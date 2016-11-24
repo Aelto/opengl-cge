@@ -29,7 +29,7 @@ namespace cge {
 		void open( int GL_major, int GL_minor, const char * name );
 
 		int shouldClose();
-		void startLoop();
+		int startLoop();
 		void endLoop();
 
 	};

@@ -1,10 +1,12 @@
 #include "helper.h"
 
+#include <iostream>
+
 namespace cge {
 
 	helper::helper() {
 
-		lastFrame = glfwGetTime();
+		lastFrame = GLfloat(glfwGetTime());
 
 	}
 
@@ -12,10 +14,23 @@ namespace cge {
 
 	GLfloat helper::getDelta() {
 
-		GLfloat _lastFrame = lastFrame;
-		lastFrame = glfwGetTime();
+		// use delta as a temporary value holder
+		delta = lastFrame;
 
-		return lastFrame - _lastFrame;
+		// this way lastFrame is already set to the current frame time
+		// four our next call
+		lastFrame = GLfloat(glfwGetTime());
+
+		// so here delta is actually lastFrame and lastFrame holds the current frame time
+		delta = lastFrame - delta;
+
+		return delta;
+
+	}
+
+	void helper::coutFramerate() {
+
+		std::cout << 1 / delta << std::endl;
 
 	}
 
