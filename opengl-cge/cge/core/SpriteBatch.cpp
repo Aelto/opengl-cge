@@ -1,5 +1,7 @@
 #include "SpriteBatch.h"
 
+#include "ResourceManager.h"
+
 #include <algorithm>
 #include <iostream>
 
@@ -38,8 +40,7 @@ namespace cge {
 
 	/// SpriteBatch
 
-	SpriteBatch::SpriteBatch()
-	{
+	SpriteBatch::SpriteBatch() {
 
 		// generates a VAO and stores its ID into quadVAO
 		glGenVertexArrays( 1, &quadVAO );
@@ -52,8 +53,7 @@ namespace cge {
 
 	}
 
-	void SpriteBatch::createVAO()
-	{
+	void SpriteBatch::createVAO() {
 
 		// We bind our VAO
 		// Everything we do now will be stored into the VAO
@@ -75,22 +75,31 @@ namespace cge {
 
 	}
 
-	void SpriteBatch::addGlyph( Glyph newGlyph )
-	{
+	Shader SpriteBatch::shader;
+
+	void SpriteBatch::linkShaders(glm::highp_mat4 projection, glm::mat4 view, glm::vec3 color) {
+
+		shader = ResourceManager::LoadShader("cge/shaders/SpriteBatchShader.vs", "cge/shaders/SpriteBatchShader.frag", nullptr, "SpriteBatchShader_default");
+		shader.SetMatrix4("projection", projection);
+		shader.SetMatrix4("view", view);
+		shader.SetVector3f("spriteColor", color);
+		
+
+	}
+
+	void SpriteBatch::addGlyph( Glyph newGlyph ) {
 
 		glyphs.push_back( newGlyph );
 
 	}
 
-	void SpriteBatch::draw( GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLuint textureID )
-	{
+	void SpriteBatch::draw( GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLuint textureID ) {
 
 		glyphs.emplace_back( x, y, width, height, textureID );
 
 	}
 
-	void SpriteBatch::begin()
-	{
+	void SpriteBatch::begin() {
 
 		// it makes glyphs.size() == 0, does not free internal memory,
 		// so when we later call emplace_back it won't have to call new
@@ -101,8 +110,7 @@ namespace cge {
 
 	}
 
-	void SpriteBatch::end()
-	{
+	void SpriteBatch::end() {
 
 		auto g_size = glyphs.size();
 
@@ -118,8 +126,7 @@ namespace cge {
 
 	}
 
-	void SpriteBatch::render()
-	{
+	void SpriteBatch::render() {
 
 		// Bind our VAO. This sets up the opengl state we need, including the 
 		// vertex attribute pointers and it binds the VBO
@@ -141,15 +148,13 @@ namespace cge {
 
 	}
 
-	void SpriteBatch::sortGlyphs()
-	{
+	void SpriteBatch::sortGlyphs() {
 
 		std::stable_sort( glyphs_map.begin(), glyphs_map.end(), compareTexture );
 
 	}
 
-	void SpriteBatch::createGlyphBatches()
-	{
+	void SpriteBatch::createGlyphBatches() {
 
 		// prepare the list of vertices we'll send to the gpu
 		std::vector<Vertex> vertices;

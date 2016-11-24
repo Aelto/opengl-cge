@@ -27,20 +27,18 @@ int main( int argc, char *argv[] ) {
 	
 	cge::Camera camera( app.width, app.height );
 
-	// load and compile our shaders
-	cge::Shader cgeShader = cge::ResourceManager::LoadShader( "shaders/cge.vs", "shaders/cge.frag", nullptr, "cge" );
-	cgeShader.Use();
-	cgeShader.SetMatrix4("projection", glm::ortho(0.0f, static_cast<GLfloat>(app.width), 0.0f, static_cast<GLfloat>(app.height)));
-	cgeShader.SetMatrix4("view", camera.view);
-	cgeShader.SetVector3f("spriteColor", glm::vec3(1.0f, 1.0f, 1.0f));
+	
+	cge::SpriteBatch::linkShaders(
+		glm::ortho(0.0f, static_cast<GLfloat>(app.width), 0.0f, static_cast<GLfloat>(app.height)),
+		camera.view, glm::vec3(1.0f, 1.0f, 1.0f)
+	);
+	cge::SpriteBatch batch;
 
 	// load our texture
 	cge::Texture2D circleTexture = cge::ResourceManager::LoadTexture( "assets/circle.png", GL_TRUE, "circle" );
-	cge::Texture2D chestTexture = cge::ResourceManager::LoadTexture( "assets/chestClosed_W.png", GL_TRUE, "chest" );
-	
-	
 
-	cge::SpriteBatch batch;
+	cge::RenderObject circle(glm::vec2(450.0f, 450.0f), glm::vec2(50.0f, 50.0f), &circleTexture);
+	
 	GLfloat delta = helper.getDelta();
 	while ( !app.startLoop() ) {
 
@@ -49,10 +47,10 @@ int main( int argc, char *argv[] ) {
 
 		camera.updateView();
 
-		cgeShader.Use(); 
+		batch.shader.Use(); 
 		batch.begin();
 
-		
+		circle.batchDraw(batch);
 
 		batch.end();
 		batch.render();

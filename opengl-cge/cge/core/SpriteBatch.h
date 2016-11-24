@@ -1,10 +1,12 @@
 #pragma once
 
+#include "Shader.h"
+
 #define GLEW_STATIC
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include <GL\glew.h>
+#include <GLFW\glfw3.h>
 #include <glm\glm.hpp>
-#include "glm/gtc/matrix_transform.hpp"
+#include "glm\gtc\matrix_transform.hpp"
 
 #include <unordered_map>
 #include <vector>
@@ -74,25 +76,35 @@ namespace cge {
 		 */
 		GLuint quadVBO;
 
+		/**
+		 * Stores a cge::Shader object to hold and use as
+		 * default fragment and vertex shaders
+		 */
+		static Shader shader;
+
 		/// methods
 
 		/**
-		 *
-		 *
+		 * Set up the VAO we need to use our VBO and shaders
 		 */
 		void createVAO();
+
+		/**
+		 *
+		 */
+		static void linkShaders(glm::highp_mat4 projection, glm::mat4 view, glm::vec3 color);
 
 		/**
 		 * Copy a glyph into the this->glyphs vector
 		 * this is not the recommended way to add a glyph
 		 */
-		void addGlyph( Glyph newGlyph );
+		void addGlyph(Glyph newGlyph);
 
 		/**
 		 * Get a set of data and emplace_back a Glyph into this->glyphs
 		 * vector with this data as parameter
 		 */
-		void draw( GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLuint textureID );
+		void draw(GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLuint textureID);
 
 		/**
 		 * Set up everything to begin the spritebatch collecting
