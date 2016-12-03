@@ -1,5 +1,7 @@
 #include "app.h"
 
+#include <iostream>
+
 namespace cge {
 
 	app::app(GLuint _width, GLuint _height)
@@ -65,9 +67,9 @@ namespace cge {
 		if (key >= 0 && key < 1024)
 		{
 			if (action == GLFW_PRESS)
-				keys[key] = GL_TRUE;
+				keys[key] = true;
 			else if (action == GLFW_RELEASE)
-				keys[key] = GL_FALSE;
+				keys[key] = false;
 		}
 
 	}

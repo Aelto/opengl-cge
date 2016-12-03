@@ -6,9 +6,12 @@
 #include <glm/glm.hpp>
 #include "glm/gtc/matrix_transform.hpp"
 
+#include <vector>
+
 #include "Texture.h"
 #include "Shader.h"
 #include "SpriteBatch.h"
+#include "Hitbox.h"
 
 namespace cge {
 
@@ -19,6 +22,7 @@ namespace cge {
 
 		/// props
 		glm::vec2 position;
+		glm::vec2 oldTranslation;
 		glm::vec2 velocity;
 		glm::vec2 acceleration;
 
@@ -29,6 +33,8 @@ namespace cge {
 		GLfloat rotate;
 
 		cge::Texture2D * texture;
+
+		cge::Hitbox * box;
 
 		/// methods
 
@@ -51,6 +57,13 @@ namespace cge {
 		bool intersects(const RenderObject & obj);
 
 		/**
+		 * Create a list of boxes based on the data supplied
+		 * It needs a vector of relative positions and a vector of sizes,
+		 * these two vectors must have the same size
+		 */
+		void addBox(Hitbox * _box);
+
+		/**
 		 * Add the value of this->acceleration to this->velocity
 		 * then resets the acceleration value.
 		 * It should be called before this->applyVelocity()
@@ -62,6 +75,11 @@ namespace cge {
 		 * It should be called just before this->draw()
 		 */
 		void applyVelocity(const GLfloat delta);
+
+		/**
+		 * Multiply the velocity by the factor
+		 */
+		void applyFriction(const GLfloat factor);
 
 	};
 

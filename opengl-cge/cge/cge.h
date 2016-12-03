@@ -14,3 +14,4 @@
 
 #include "core\SpriteBatch.h"
 #include "core\RenderObject.h"
+#include "core\Hitbox.h"

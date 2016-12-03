@@ -17,7 +17,7 @@ namespace cge {
 		GLuint width;
 		GLuint height;
 
-		GLboolean keys[ 1024 ];
+		bool keys[ 1024 ];
 
 		GLFWwindow * window;
 

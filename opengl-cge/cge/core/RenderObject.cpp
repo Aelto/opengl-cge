@@ -2,11 +2,11 @@
 
 namespace cge {
 	RenderObject::RenderObject()
-		: position(0.0f, 0.0f), velocity(0.0f, 0.0f), acceleration(0.0f, 0.0f), size(10.0f, 10.0f), texture(nullptr)
+		: position(0.0f, 0.0f), velocity(0.0f, 0.0f), acceleration(0.0f, 0.0f), size(10.0f, 10.0f), texture(nullptr), box(nullptr)
 	{}
 
 	RenderObject::RenderObject(glm::vec2 pos, glm::vec2 size, cge::Texture2D * _texture)
-		: position(pos), velocity(0.0f, 0.0f), acceleration(0.0f, 0.0f), size(size), texture(_texture)
+		: position(pos), velocity(0.0f, 0.0f), acceleration(0.0f, 0.0f), size(size), texture(_texture), box(nullptr)
 	{}
 
 
@@ -24,11 +24,17 @@ namespace cge {
 	}
 
 	bool RenderObject::intersects(const RenderObject & obj) {
-		
-		return position.x > obj.position.x + obj.size.x
-			|| position.y > obj.position.y + obj.size.y
-			|| position.x + size.x < obj.position.x
-			|| position.y + size.y < obj.position.y;
+
+		if (box == nullptr)
+			return false;
+	
+		return box->intersects(obj.box, position, obj.position);
+
+	}
+
+	void RenderObject::addBox(Hitbox * _box) {
+
+		box = _box;
 
 	}
 
@@ -47,5 +53,12 @@ namespace cge {
 		position.x += velocity.x;
 		position.y += velocity.y;
 
+		oldTranslation.x = velocity.x;
+		oldTranslation.y = velocity.y;
+
+	}
+
+	void RenderObject::applyFriction(const GLfloat factor)	{
+		velocity *= factor;
 	}
 }
