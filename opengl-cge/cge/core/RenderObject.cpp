@@ -32,6 +32,12 @@ namespace cge {
 
 	}
 
+	void RenderObject::resolve(RenderObject & obj) {
+
+		box->resolve(obj.box, position, obj.position);
+
+	}
+
 	void RenderObject::addBox(Hitbox * _box) {
 
 		box = _box;

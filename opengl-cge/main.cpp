@@ -15,8 +15,6 @@
 #include <glm\glm.hpp>
 #include "glm\gtc\matrix_transform.hpp"
 
-#include "utils\Star.h"
-
 
 int main( int argc, char *argv[] ) {
 
@@ -28,7 +26,7 @@ int main( int argc, char *argv[] ) {
 	cge::Camera camera( app.width, app.height );
 
 	// load and compile our shaders
-	cge::Shader cgeShader = cge::ResourceManager::LoadShader("shaders/cge.vs", "shaders/cge.frag", nullptr, "cge");
+	cge::Shader cgeShader = cge::ResourceManager::LoadShader("./shaders/cge.vs", "./shaders/cge.frag", nullptr, "cge");
 	cgeShader.Use();
 	cgeShader.SetMatrix4("projection", glm::ortho(0.0f, static_cast<GLfloat>(app.width), 0.0f, static_cast<GLfloat>(app.height)));
 	cgeShader.SetMatrix4("view", camera.view);
@@ -79,7 +77,7 @@ int main( int argc, char *argv[] ) {
 		player.applyFriction(0.9);
 
 		if (player.intersects(obstacle))
-			player.position.x = 100;
+			player.resolve(obstacle);
 
 		cgeShader.Use();//batch.shader.Use(); 
 		batch.begin();

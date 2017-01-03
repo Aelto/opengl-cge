@@ -27,6 +27,8 @@ namespace cge {
 		 */
 		bool Hitbox::intersects(Hitbox * obj, glm::vec2 & obj1_position, glm::vec2 obj2_position);
 
+		void Hitbox::resolve(Hitbox * obj, glm::vec2 & obj1_position, glm::vec2 obj2_position);
+
 	};
 
 }

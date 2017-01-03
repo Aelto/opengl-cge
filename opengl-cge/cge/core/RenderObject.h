@@ -57,6 +57,12 @@ namespace cge {
 		bool intersects(const RenderObject & obj);
 
 		/**
+		 * Resolve the collision so "this" and "obj" don't
+		 * touh anymore by moving "this"
+		 */
+		void resolve(RenderObject & obj);
+
+		/**
 		 * Create a list of boxes based on the data supplied
 		 * It needs a vector of relative positions and a vector of sizes,
 		 * these two vectors must have the same size
