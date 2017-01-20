@@ -79,11 +79,10 @@ namespace cge {
 
 	void SpriteBatch::linkShaders(glm::highp_mat4 projection, glm::mat4 view, glm::vec3 color) {
 
-		shader = ResourceManager::LoadShader("cge/shaders/SpriteBatchShader.vs", "cge/shaders/SpriteBatchShader.frag", nullptr, "SpriteBatchShader_default");
+		shader = ResourceManager::LoadShader("shaders/cge/SpriteBatchShader.vs", "shaders/cge/SpriteBatchShader.frag", nullptr, "SpriteBatchShader_default");
 		shader.SetMatrix4("projection", projection);
 		shader.SetMatrix4("view", view);
 		shader.SetVector3f("spriteColor", color);
-		
 
 	}
 

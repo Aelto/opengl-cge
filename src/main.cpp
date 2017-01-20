@@ -15,20 +15,18 @@
 #include <glm\glm.hpp>
 #include "glm\gtc\matrix_transform.hpp"
 
-#include "utils\Star.h"
 
-
-int main( int argc, char *argv[] ) {
+int main(int argc, char *argv[]) {
 
 	cge::helper helper;
 
-	cge::app app( 1250, 900 );
+	cge::app app(1250, 900);
 	app.open(4, 3, "opengl engine");
 	
-	cge::Camera camera( app.width, app.height );
+	cge::Camera camera(app.width, app.height);
 
 	// load and compile our shaders
-	cge::Shader cgeShader = cge::ResourceManager::LoadShader("shaders/cge.vs", "shaders/cge.frag", nullptr, "cge");
+	cge::Shader cgeShader = cge::ResourceManager::LoadShader("./shaders/cge.vs", "./shaders/cge.frag", nullptr, "cge");
 	cgeShader.Use();
 	cgeShader.SetMatrix4("projection", glm::ortho(0.0f, static_cast<GLfloat>(app.width), 0.0f, static_cast<GLfloat>(app.height)));
 	cgeShader.SetMatrix4("view", camera.view);
@@ -42,7 +40,7 @@ int main( int argc, char *argv[] ) {
 	cge::SpriteBatch batch;
 
 	// load our texture
-	cge::Texture2D circleTexture = cge::ResourceManager::LoadTexture( "assets/circle.png", GL_TRUE, "circle" );
+	cge::Texture2D circleTexture = cge::ResourceManager::LoadTexture("assets/circle.png", GL_TRUE, "circle");
 	cge::Texture2D playerTexture = cge::ResourceManager::LoadTexture("assets/player.png", GL_TRUE, "player");
 	cge::Texture2D tileTexture = cge::ResourceManager::LoadTexture("assets/tileBrown_18.png", GL_TRUE, "tile");
 
@@ -58,7 +56,7 @@ int main( int argc, char *argv[] ) {
 	
 	
 	GLfloat delta = helper.getDelta();
-	while ( !app.startLoop() ) {
+	while (!app.startLoop()) {
 
 		delta = helper.getDelta();
 		//helper.coutFramerate();
@@ -70,7 +68,7 @@ int main( int argc, char *argv[] ) {
 		if (app.keys[GLFW_KEY_S] == true)
 			player.acceleration.y -= 0.1f;
 		if (app.keys[GLFW_KEY_D] == true)
-			player.acceleration.x += 0.1f;
+			player.acceleration.x += 0.9f;
 		if (app.keys[GLFW_KEY_A] == true)
 			player.acceleration.x -= 0.1f;
 

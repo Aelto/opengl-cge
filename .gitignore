@@ -1,11 +1,8 @@
 
-/*
-!/opengl-cge.sln
-!/opengl-cge
-/opengl-cge/Debug/*
-/opengl-cge/Release/*
-/opengl-cge/x64/*
-/opengl-cge/opengl-cge.exe
-/opengl-cge/*.vcxproj
-/opengl-cge/*.vcxproj.filters
-/opengl-cge/*.vcxproj.user
+**/.obj
+**/.dll
+**/.lib
+
+build/includes/*
+build/libs/*
+

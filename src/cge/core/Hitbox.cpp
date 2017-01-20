@@ -15,6 +15,12 @@ namespace cge {
 
 	}
 
+	void Hitbox::resolve(Hitbox * obj, glm::vec2 & obj1_position, glm::vec2 obj2_position) {
+
+		
+
+	}
+
 }
 
 
