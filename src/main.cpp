@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
 		player.applyFriction(0.9);
 
 		if (player.intersects(obstacle))
-			player.position.x = 100;
+			player.resolve(obstacle);
 
 		cgeShader.Use();//batch.shader.Use(); 
 		batch.begin();
