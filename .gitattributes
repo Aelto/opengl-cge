@@ -1,2 +1,2 @@
-build/* linguist-documentation=false
-build/* linguist-vendored=false
+build/* linguist-documentation
+build/* linguist-vendored
