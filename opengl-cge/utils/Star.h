@@ -6,11 +6,11 @@
 #include <glm\glm.hpp>
 #include "glm\gtc\matrix_transform.hpp"
 
-#include "../cge/core/RenderObject.h"
+#include "../cge/game/Sprite.h"
 
 namespace uni {
 
-	class Star : public cge::RenderObject {
+	class Star : public cge::Sprite {
 	public:
 		Star();
 		Star(glm::vec2 pos, glm::vec2 size, cge::Texture2D * _texture);

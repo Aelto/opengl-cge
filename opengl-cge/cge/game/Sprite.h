@@ -8,17 +8,17 @@
 
 #include <vector>
 
-#include "Texture.h"
-#include "Shader.h"
-#include "SpriteBatch.h"
+#include "../core/Texture.h"
+#include "../core/Shader.h"
+#include "../core/SpriteBatch.h"
 #include "Hitbox.h"
 
 namespace cge {
 
-	class RenderObject {
+	class Sprite {
 	public:
-		RenderObject();
-		RenderObject(glm::vec2 pos, glm::vec2 size, cge::Texture2D * _texture);
+		Sprite();
+		Sprite(glm::vec2 pos, glm::vec2 size, cge::Texture2D * _texture);
 
 		/// props
 		glm::vec2 position;
@@ -52,15 +52,15 @@ namespace cge {
 
 		/**
 		 * Get whether or not "this" does intersect
-		 * with another RenderObject
+		 * with another Sprite
 		 */
-		bool intersects(const RenderObject & obj);
+		bool intersects(const Sprite & obj);
 
 		/**
 		 * Resolve the collision so "this" and "obj" don't
-		 * touh anymore by moving "this"
+		 * touch anymore by moving "this"
 		 */
-		void resolve(RenderObject & obj);
+		void resolve(Sprite & obj);
 
 		/**
 		 * Create a list of boxes based on the data supplied

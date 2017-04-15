@@ -3,13 +3,13 @@
 
 namespace uni {
 	Star::Star()
-		: RenderObject()
+		: Sprite()
 	{
 		origin = glm::vec2(position.x, position.y);
 	}
 
 	Star::Star(glm::vec2 pos, glm::vec2 size, cge::Texture2D * _texture)
-		: RenderObject(pos, size, _texture), origin(pos)
+		: Sprite(pos, size, _texture), origin(pos)
 	{
 	}
 
