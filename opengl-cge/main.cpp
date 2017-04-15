@@ -51,34 +51,19 @@ int main(int argc, char *argv[]) {
 	cge::Hitbox playerBox(glm::vec2(50.0f, 50.0f), glm::vec2(0.0f, 0.0f));
 	cge::Hitbox tileBox(glm::vec2(100.0f, 100.0f), glm::vec2(0.0f, 0.0f));
 
-	cge::Sprite player(glm::vec2(450.0f, 450.0f), glm::vec2(50.0f, 50.0f), &texture_adventurer);
+	cge::SpriteSheet player(glm::vec2(450.0f, 450.0f), glm::vec2(50.0f, 50.0f), &texture_adventurer,
+		cge::SpriteSheetUV(
+			3, // rows
+			9, // columns
+			1000, // 1s per cell
+			24 // cells
+		));
 	player.addBox(&playerBox);
+
+	cge::Sprite playerSheet(glm::vec2(0.0f, 0.0f), glm::vec2(500, 500.0f), &texture_adventurer);
 
 	cge::Sprite obstacle(glm::vec2(525.0f, 525.0f), glm::vec2(100.0f, 100.0f), &texture_tile);
 	obstacle.addBox(&tileBox);
-
-	// TESTING
-	cge::SpriteSheetUV spritesheet(
-		&texture_adventurer, // texture2D
-		3, // rows
-		9, // columns
-		1000, // 1s per cell
-		24 // cells
-	);
-
-	std::cout << spritesheet.xMultiplier << std::endl;
-	std::cout << spritesheet.currentTime << " : " << spritesheet.getTopLeftXUv() << " : " << spritesheet.getTopLeftYUv() << " : " << spritesheet.getBottomRightXUv() << " : " << spritesheet.getBottomRightYUv() << std::endl;
-	spritesheet.time(500.0f);
-	std::cout << spritesheet.currentTime << " : " << spritesheet.getTopLeftXUv() << " : " << spritesheet.getTopLeftYUv() << " : " << spritesheet.getBottomRightXUv() << " : " << spritesheet.getBottomRightYUv() << std::endl;
-	spritesheet.time(500.0f);
-	std::cout << spritesheet.currentTime << " : " << spritesheet.getTopLeftXUv() << " : " << spritesheet.getTopLeftYUv() << " : " << spritesheet.getBottomRightXUv() << " : " << spritesheet.getBottomRightYUv() << std::endl;
-	spritesheet.time(500.0f);
-	std::cout << spritesheet.currentTime << " : " << spritesheet.getTopLeftXUv() << " : " << spritesheet.getTopLeftYUv() << " : " << spritesheet.getBottomRightXUv() << " : " << spritesheet.getBottomRightYUv() << std::endl;
-	spritesheet.time(500.0f);
-	std::cout << spritesheet.currentTime << " : " << spritesheet.getTopLeftXUv() << " : " << spritesheet.getTopLeftYUv() << " : " << spritesheet.getBottomRightXUv() << " : " << spritesheet.getBottomRightYUv() << std::endl;
-	spritesheet.time(500.0f);
-	std::cout << spritesheet.currentTime << " : " << spritesheet.getTopLeftXUv() << " : " << spritesheet.getTopLeftYUv() << " : " << spritesheet.getBottomRightXUv() << " : " << spritesheet.getBottomRightYUv() << std::endl;
-	
 	
 	GLfloat delta = helper.getDelta();
 	while (!app.startLoop()) {
@@ -108,11 +93,14 @@ int main(int argc, char *argv[]) {
 		batch.begin();
 
 		player.batchDraw(batch);
+		playerSheet.batchDraw(batch);
 		obstacle.batchDraw(batch);
 		
 
 		batch.end();
 		batch.render();
+
+		player.time(delta * 1000.0f);
 
 		
 		// end of the drawing process

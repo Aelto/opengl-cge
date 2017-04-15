@@ -17,3 +17,4 @@
 #include "game\Sprite.h"
 #include "game\Hitbox.h"
 #include "game\SpriteSheetUV.h"
+#include "game\SpriteSheet.h"

@@ -37,6 +37,35 @@ namespace cge {
 
 	}
 
+	Glyph::Glyph(GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLuint _textureID,
+		GLfloat topLeftUVx, GLfloat topRightUVx, GLfloat bottomRightUVx, GLfloat bottomLeftUVx,
+		GLfloat topLeftUVy, GLfloat topRightUVy, GLfloat bottomRightUVy, GLfloat bottomLeftUVy) {
+
+		// uses the top left corner as anchor
+
+		topLeft.x = x;
+		topLeft.y = y;
+		topLeft.uvX = topLeftUVx;
+		topLeft.uvY = topLeftUVy;
+
+		topRight.x = x + width;
+		topRight.y = y;
+		topRight.uvX = topRightUVx;
+		topRight.uvY = topRightUVy;
+
+		bottomLeft.x = x;
+		bottomLeft.y = y + height;
+		bottomLeft.uvX = bottomLeftUVx;
+		bottomLeft.uvY = bottomLeftUVy;
+
+		bottomRight.x = x + width;
+		bottomRight.y = y + height;
+		bottomRight.uvX = bottomRightUVx;
+		bottomRight.uvY = bottomRightUVy;
+
+		textureID = _textureID;
+	}
+
 
 	/// SpriteBatch
 
@@ -96,6 +125,14 @@ namespace cge {
 
 		glyphs.emplace_back( x, y, width, height, textureID );
 
+	}
+
+	void SpriteBatch::draw(GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLuint textureID,
+		GLfloat topLeftUVx, GLfloat topRightUVx, GLfloat bottomRightUVx, GLfloat bottomLeftUVx,
+		GLfloat topLeftUVy, GLfloat topRightUVy, GLfloat bottomRightUVy, GLfloat bottomLeftUVy)	{
+		glyphs.emplace_back(x, y, width, height, textureID,
+			topLeftUVx, topRightUVx, bottomRightUVx, bottomLeftUVx,
+			topLeftUVy, topRightUVy, bottomRightUVy, bottomLeftUVy);
 	}
 
 	void SpriteBatch::begin() {

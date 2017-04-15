@@ -12,11 +12,6 @@ namespace cge {
      */
     class SpriteSheetUV {
         public:
-        
-        /**
-         * A pointer to the Texture2D used as a spritesheet
-         */
-        Texture2D * texture;
 
         /**
          * Stores how many rows are in the spritesheet
@@ -70,7 +65,10 @@ namespace cge {
 
         
 
-        SpriteSheetUV(Texture2D * _texture, int _rows, int _columns, float _timePerCell, int _cells = -1);
+        SpriteSheetUV(int _rows, int _columns, float _timePerCell, int _cells = -1);
+				
+				// copy constructor
+				SpriteSheetUV(const SpriteSheetUV & obj);
 
 				SpriteSheetUV clone();
 

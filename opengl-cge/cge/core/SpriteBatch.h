@@ -23,6 +23,9 @@ namespace cge {
 	class Glyph {
 		public:
 		Glyph( GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLuint _textureID );
+		Glyph(GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLuint _textureID,
+			GLfloat topLeftUVx, GLfloat topRightUVx, GLfloat bottomRightUVx, GLfloat bottomLeftUVx,
+			GLfloat topLeftUVy, GLfloat topRightUVy, GLfloat bottomRightUVy, GLfloat bottomLeftUVy);
 
 		Vertex topLeft;
 		Vertex topRight;
@@ -105,6 +108,9 @@ namespace cge {
 		 * vector with this data as parameter
 		 */
 		void draw(GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLuint textureID);
+		void draw(GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLuint textureID,
+			GLfloat topLeftUVx, GLfloat topRightUVx, GLfloat bottomRightUVx, GLfloat bottomLeftUVx,
+			GLfloat topLeftUVy, GLfloat topRightUVy, GLfloat bottomRightUVy, GLfloat bottomLeftUVy);
 
 		/**
 		 * Set up everything to begin the spritebatch collecting

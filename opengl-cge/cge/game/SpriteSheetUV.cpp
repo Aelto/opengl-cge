@@ -2,12 +2,11 @@
 
 namespace cge {
 
-    SpriteSheetUV::SpriteSheetUV(Texture2D * _texture, int _rows, int _columns, float _timePerCell, int _cells) {
-        texture = _texture;
+    SpriteSheetUV::SpriteSheetUV(int _rows, int _columns, float _timePerCell, int _cells) {
         rows = _rows;
         columns = _columns;
 
-        if (_cells = -1 || _cells > rows * columns) {
+        if (_cells == -1 || _cells > rows * columns) {
             cells = rows * columns;
         } else cells = _cells;
 
@@ -23,35 +22,56 @@ namespace cge {
         yMultiplier = 1.0f / rows;
     }
 
-		SpriteSheetUV SpriteSheetUV::clone() {
-			return SpriteSheetUV(texture, rows, columns, timePerCell, cells);
+		SpriteSheetUV::SpriteSheetUV(const SpriteSheetUV & obj)	{
+			rows = obj.rows;
+			columns = obj.columns;
+
+			if (obj.cells == -1 || obj.cells > rows * columns) {
+				cells = rows * columns;
+			}
+			else cells = obj.cells;
+
+			currentCell = 0;
+			currentRow = 0;
+			currentColumn = 0;
+			currentTime = 0.0f;
+
+			timePerCell = obj.timePerCell;
+
+			// precompute the X and Y values of a cells
+			xMultiplier = 1.0f / columns;
+			yMultiplier = 1.0f / rows;
 		}
 
-    GLfloat SpriteSheetUV::getTopLeftXUv() {
-        return xMultiplier * currentColumn;
-    }
-    GLfloat SpriteSheetUV::getTopLeftYUv() {
-        return yMultiplier * currentRow;
-    }
-
-    GLfloat SpriteSheetUV::getTopRightXUv() {
-        return xMultiplier * (currentColumn + 1);
-    }
-    GLfloat SpriteSheetUV::getTopRightYUv() {
-        return yMultiplier * currentRow;
-    }
+		SpriteSheetUV SpriteSheetUV::clone() {
+			return SpriteSheetUV(rows, columns, timePerCell, cells);
+		}
 
     GLfloat SpriteSheetUV::getBottomLeftXUv() {
         return xMultiplier * currentColumn;
     }
     GLfloat SpriteSheetUV::getBottomLeftYUv() {
-        return yMultiplier * (currentRow + 1);
+        return yMultiplier * currentRow;
     }
 
     GLfloat SpriteSheetUV::getBottomRightXUv() {
         return xMultiplier * (currentColumn + 1);
     }
     GLfloat SpriteSheetUV::getBottomRightYUv() {
+        return yMultiplier * currentRow;
+    }
+
+    GLfloat SpriteSheetUV::getTopLeftXUv() {
+        return xMultiplier * currentColumn;
+    }
+    GLfloat SpriteSheetUV::getTopLeftYUv() {
+        return yMultiplier * (currentRow + 1);
+    }
+
+    GLfloat SpriteSheetUV::getTopRightXUv() {
+        return xMultiplier * (currentColumn + 1);
+    }
+    GLfloat SpriteSheetUV::getTopRightYUv() {
         return yMultiplier * (currentRow + 1);
     }
 
