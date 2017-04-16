@@ -86,7 +86,7 @@ namespace cge {
 
         /**
          * Updates the positions to the next cell in the spritesheet
-         * Comes back to 'currentCell == cells' if the last
+         * Comes back to zero if the last
          */
         void nextCell();
 

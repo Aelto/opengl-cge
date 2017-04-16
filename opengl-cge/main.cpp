@@ -60,6 +60,9 @@ int main(int argc, char *argv[]) {
 		));
 	player.addBox(&playerBox);
 
+	cge::SpriteAnimation playerAnimation(glm::vec2(50.0f, 550.0f), glm::vec2(50.0f, 50.0f), &texture_adventurer,
+		cge::AnimationsUV(3, 9).setAnimation(std::string("default"), 0, 0, 6, 0, 1000));
+
 	cge::Sprite playerSheet(glm::vec2(0.0f, 0.0f), glm::vec2(500, 500.0f), &texture_adventurer);
 
 	cge::Sprite obstacle(glm::vec2(525.0f, 525.0f), glm::vec2(100.0f, 100.0f), &texture_tile);
@@ -84,7 +87,7 @@ int main(int argc, char *argv[]) {
 
 		player.applyAcceleration(delta);
 		player.applyVelocity(delta);
-		player.applyFriction(0.9);
+		player.applyFriction(0.9f);
 
 		if (player.intersects(obstacle))
 			player.resolve(obstacle);
@@ -94,6 +97,7 @@ int main(int argc, char *argv[]) {
 
 		player.batchDraw(batch);
 		playerSheet.batchDraw(batch);
+		playerAnimation.batchDraw(batch);
 		obstacle.batchDraw(batch);
 		
 
@@ -101,7 +105,7 @@ int main(int argc, char *argv[]) {
 		batch.render();
 
 		player.time(delta * 1000.0f);
-
+		playerAnimation.time(delta * 1000.0f);
 		
 		// end of the drawing process
 		app.endLoop();

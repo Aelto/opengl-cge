@@ -18,3 +18,5 @@
 #include "game\Hitbox.h"
 #include "game\SpriteSheetUV.h"
 #include "game\SpriteSheet.h"
+#include "game\AnimationsUV.h"
+#include "game\SpriteAnimation.h"
