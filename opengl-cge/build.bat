@@ -1,0 +1,1 @@
+msbuild opengl-cge.vcxproj /nologo /p:outDir=.\
