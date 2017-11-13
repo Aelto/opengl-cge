@@ -30,7 +30,7 @@ Takes as parameters the window width and the window height
   Usage example:
   ```cpp
   cge::app app(1250, 900);
-	app.open(4, 3, "opengl engine");
+  app.open(4, 3, "opengl engine");
   ```
 
 - **shouldClose** method
@@ -122,15 +122,15 @@ takes as parameters the viewport' width and height.
   Usage example:
   ```cpp
   cge::app app(1250, 900);
-	app.open(4, 3, "opengl engine");
+  app.open(4, 3, "opengl engine");
 	
-	cge::Camera camera(app.width, app.height);
+  cge::Camera camera(app.width, app.height);
 
   while (!app.startLoop()) {
-		camera.updateView();
+    camera.updateView();
 		
-		app.endLoop();
-	}
+    app.endLoop();
+  }
   ```
 
 #### Methods
@@ -144,16 +144,16 @@ takes as parameters the viewport' width and height.
   Usage example:
   ```cpp
   cge::app app(1250, 900);
-	app.open(4, 3, "opengl engine");
+  app.open(4, 3, "opengl engine");
 	
-	cge::Camera camera(app.width, app.height);
+  cge::Camera camera(app.width, app.height);
 
   while (!app.startLoop()) {
     camera.updateView();
     camera.runFollow();
 		
-		app.endLoop();
-	}
+  app.endLoop();
+  }
   ```
 
 ### Properties
@@ -215,9 +215,9 @@ cge::SpriteBatch batch;
   Usage example:
   ```cpp
   cge::app app(1250, 900);
-	app.open(4, 3, "opengl engine");
+  app.open(4, 3, "opengl engine");
 	
-	cge::Camera camera(app.width, app.height);
+  cge::Camera camera(app.width, app.height);
   cge::SpriteBatch batch;
 
   while (!app.startLoop()) {
@@ -352,9 +352,9 @@ Sprite(glm::vec2 pos, glm::vec2 size, cge::Texture2D * _texture);
   Usage example
   ```cpp
   cge::app app(1250, 900);
-	app.open(4, 3, "opengl engine");
-	
-	cge::Camera camera(app.width, app.height);
+  app.open(4, 3, "opengl engine");
+
+  cge::Camera camera(app.width, app.height);
   cge::SpriteBatch batch;
 
   cge::Texture2D texture_tile = cge::ResourceManager::LoadTexture("assets/tile.png", GL_TRUE, "tile");
@@ -362,7 +362,7 @@ Sprite(glm::vec2 pos, glm::vec2 size, cge::Texture2D * _texture);
   cge::Hitbox tileBox(glm::vec2(100.0f, 100.0f), glm::vec2(0.0f, 0.0f));
 
   cge::Sprite obstacle(glm::vec2(525.0f, 525.0f), glm::vec2(100.0f, 100.0f), &texture_tile);
-	obstacle.addBox(&tileBox);
+  obstacle.addBox(&tileBox);
 
   while (!app.startLoop()) {
     batch.begin();
