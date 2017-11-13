@@ -546,7 +546,7 @@ Text(char* text, TextManager * manager, GLfloat x = 0, GLfloat y = 0, GLfloat sc
   ```
 
 # Dependencies
-- opengl
-- glfw
-- glew
-- SOIL
+- opengl (use the one provided by your operating system)
+- [glfw](http://www.glfw.org/)
+- [glew](http://glew.sourceforge.net/)
+- [SOIL](http://www.lonesock.net/soil.html)
