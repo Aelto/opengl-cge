@@ -1,5 +1,7 @@
 #include "SpriteSheetUV.h"
 
+#include <iostream>
+
 namespace cge {
 
     SpriteSheetUV::SpriteSheetUV(int _rows, int _columns, float _timePerCell, int _cells) {
@@ -22,30 +24,30 @@ namespace cge {
         yMultiplier = 1.0f / rows;
     }
 
-		SpriteSheetUV::SpriteSheetUV(const SpriteSheetUV & obj)	{
-			rows = obj.rows;
-			columns = obj.columns;
+    SpriteSheetUV::SpriteSheetUV(const SpriteSheetUV & obj)	{
+        rows = obj.rows;
+        columns = obj.columns;
 
-			if (obj.cells == -1 || obj.cells > rows * columns) {
-				cells = rows * columns;
-			}
-			else cells = obj.cells;
+        if (obj.cells == -1 || obj.cells > rows * columns) {
+            cells = rows * columns;
+        }
+        else cells = obj.cells;
 
-			currentCell = 0;
-			currentRow = 0;
-			currentColumn = 0;
-			currentTime = 0.0f;
+        currentCell = obj.currentCell;
+        currentRow = obj.currentRow;
+        currentColumn = obj.currentColumn;
+        currentTime = obj.currentTime;
 
-			timePerCell = obj.timePerCell;
+        timePerCell = obj.timePerCell;
 
-			// precompute the X and Y values of a cells
-			xMultiplier = 1.0f / columns;
-			yMultiplier = 1.0f / rows;
-		}
+        // precompute the X and Y values of a cells
+        xMultiplier = 1.0f / columns;
+        yMultiplier = 1.0f / rows;
+    }
 
-		SpriteSheetUV SpriteSheetUV::clone() {
-			return SpriteSheetUV(rows, columns, timePerCell, cells);
-		}
+    SpriteSheetUV SpriteSheetUV::clone() {
+        return SpriteSheetUV(rows, columns, timePerCell, cells);
+    }
 
     GLfloat SpriteSheetUV::getBottomLeftXUv() {
         return xMultiplier * currentColumn;

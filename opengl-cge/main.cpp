@@ -8,6 +8,8 @@
 #include <time.h>
 #include <algorithm>
 #include <cmath>
+#include <chrono>
+#include <thread>
 
 #define GLEW_STATIC
 #include <GL\glew.h>
@@ -15,24 +17,13 @@
 #include <glm\glm.hpp>
 #include "glm\gtc\matrix_transform.hpp"
 
-#include <ft2build.h>
-#include FT_FREETYPE_H
 
-
-struct Character {
-	GLuint TextureID;
-	glm::ivec2 Size;
-	glm::ivec2 Bearing;
-	GLuint Advance;
-};
-std::map<GLchar, Character> Characters;
-GLuint VAO, VBO;
-void RenderText(cge::Shader &shader, std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color);
-
+#include "game/assets-uv.h";
+#include "game/constants.h";
 
 int main(int argc, char *argv[]) {
 	
-	cge::app app(1250, 900);
+	cge::app app(1280, 900);
 	app.open(4, 3, "opengl engine");
 	
 	cge::Camera camera(app.width, app.height);
@@ -47,76 +38,86 @@ int main(int argc, char *argv[]) {
 	cgeShader.SetMatrix4("view", camera.view);
 	cgeShader.SetVector3f("spriteColor", glm::vec3(1.0f, 1.0f, 1.0f));
 	
-	cge::SpriteBatch::linkShaders(
-		glm::ortho(0.0f, static_cast<GLfloat>(app.width), 0.0f, static_cast<GLfloat>(app.height)),
-		camera.view, glm::vec3(1.0f, 1.0f, 1.0f)
-	);
+	cge::Texture2D TEXTURE = cge::ResourceManager::LoadTexture("assets/assets.png", GL_TRUE, "assets");
+
 	cge::SpriteBatch batch;
 
-	// load our textures
-	cge::Texture2D texture_circle = cge::ResourceManager::LoadTexture("assets/circle.png", GL_TRUE, "circle");
-	cge::Texture2D texture_player = cge::ResourceManager::LoadTexture("assets/player.png", GL_TRUE, "player");
-	cge::Texture2D texture_checkClosed_W = cge::ResourceManager::LoadTexture("assets/checkClosed_W.png", GL_TRUE, "checkClosed_W");
-	cge::Texture2D texture_tile = cge::ResourceManager::LoadTexture("assets/tileBrown_18.png", GL_TRUE, "tile");
-	cge::Texture2D texture_adventurer = cge::ResourceManager::LoadTexture("assets/adven.png", GL_TRUE, "adven");
+	cge::SpriteAnimation player(
+		glm::vec2(16, 16),
+		glm::vec2(GAME::constants::tile_size, GAME::constants::tile_size),
+		&TEXTURE,
+		GAME::assets_uv::CREATURES[20]);
 
+	std::vector<cge::SpriteAnimation> floors;
+	for (auto x = 0; x < 10; x += 1)
+		for (auto y = 0; y < 10; y += 1) {
+			floors.push_back(
+				cge::SpriteAnimation(
+					glm::vec2(x * GAME::constants::tile_size, y * GAME::constants::tile_size),
+					glm::vec2(GAME::constants::tile_size, GAME::constants::tile_size),
+					&TEXTURE,
+					GAME::assets_uv::FLOORS[5]
+				)
+			);
+		}
 
-	cge::Hitbox playerBox(glm::vec2(50.0f, 50.0f), glm::vec2(0.0f, 0.0f));
-	cge::Hitbox tileBox(glm::vec2(100.0f, 100.0f), glm::vec2(0.0f, 0.0f));
-
-	cge::SpriteAnimation player(glm::vec2(50.0f, 550.0f), glm::vec2(50.0f, 50.0f), &texture_adventurer,
-		cge::AnimationsUV(3, 9).setAnimation(std::string("default"), 0, 0, 6, 0, 1000));
-	player.addBox(&playerBox);
-
-	cge::Sprite obstacle(glm::vec2(525.0f, 525.0f), glm::vec2(100.0f, 100.0f), &texture_tile);
-	obstacle.addBox(&tileBox);
-
-	cge::Text textObject = textManager.newText("Hello world", 150, 150);
 	
+
+	cge::SpriteAnimation wall(
+		glm::vec2(app.width / 2, app.height / 2),
+		glm::vec2(GAME::constants::tile_size * 2, GAME::constants::tile_size * 2),
+		&TEXTURE,
+		GAME::assets_uv::WALLS[0]);
+
+	cge::Hitbox wallBox(glm::vec2(1.0f, 0.6f), glm::vec2(0.5f, 0.5f));
+	cge::Hitbox playerBox(glm::vec2(0.5f, 0.5f), glm::vec2(0.5f, 0.5f));
+	wall.addBox(&wallBox);
+	player.addBox(&playerBox);
 
 	GLfloat delta = helper.getDelta();
 	while (!app.startLoop()) {
-
 		delta = helper.getDelta();
-		// helper.coutFramerate();
-
+		helper.coutFramerate();
 		camera.updateView();
 
-		if (app.keys[GLFW_KEY_W] == true)
-			player.acceleration.y += 1.0f;
-		if (app.keys[GLFW_KEY_S] == true)
-			player.acceleration.y -= 1.0f;
-		if (app.keys[GLFW_KEY_D] == true)
-			player.acceleration.x += 1.0f;
-		if (app.keys[GLFW_KEY_A] == true)
-			player.acceleration.x -= 1.0f;
+		if (app.keys[GLFW_KEY_W])
+			player.acceleration.y += GAME::constants::hero_speed * delta;
+		if (app.keys[GLFW_KEY_A])
+			player.acceleration.x -= GAME::constants::hero_speed * delta;
+		if (app.keys[GLFW_KEY_D])
+			player.acceleration.x += GAME::constants::hero_speed * delta;
+		if (app.keys[GLFW_KEY_S])
+			player.acceleration.y -= GAME::constants::hero_speed * delta;
 
 		player.applyAcceleration(delta);
 		player.applyVelocity(delta);
+
+		if (player.intersects(wall)) {
+			player.position -= player.velocity;
+			// player.resolve(wall);
+		}
+
 		player.applyFriction(0.9f);
 
-		if (player.intersects(obstacle))
-			player.resolve(obstacle);
+		
+			
 
-		cgeShader.Use();
 		batch.begin();
 
-		player.batchDraw(batch);
-		obstacle.batchDraw(batch);
 		
+		for (auto & floor : floors)
+			floor.batchDraw(batch);
+
+		wall.batchDraw(batch);
+		player.batchDraw(batch);
 
 		batch.end();
 		batch.render();
 
-		textObject.position.x = player.position.x;
-		textObject.position.y = player.position.y + player.size.y + 15;
-		textObject.render();
+		// player.time(delta * 1000.0f);
 
-		player.time(delta * 1000.0f);
-		
 		// end of the drawing process
 		app.endLoop();
-
 	}
 
 	return 0;

@@ -36,7 +36,7 @@ namespace cge {
 		 * Return whether or not this hitbox intersects with another hitbox
 		 * based on two objects positions
 		 */
-		bool intersects(Hitbox * obj, glm::vec2 & obj1_position, glm::vec2 obj2_position);
+		bool intersects(Hitbox * obj, const glm::vec2 & obj1_position, const glm::vec2 & obj2_position, const glm::vec2 & obj1_size, const glm::vec2 & obj2_size);
 
 		/**
 		 * Resolve the collision between two hitboxes

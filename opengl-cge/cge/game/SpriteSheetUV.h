@@ -67,10 +67,10 @@ namespace cge {
 
         SpriteSheetUV(int _rows, int _columns, float _timePerCell, int _cells = -1);
 				
-				// copy constructor
-				SpriteSheetUV(const SpriteSheetUV & obj);
+        // copy constructor
+        SpriteSheetUV(const SpriteSheetUV & obj);
 
-				SpriteSheetUV clone();
+        SpriteSheetUV clone();
 
         GLfloat getTopLeftXUv();
         GLfloat getTopLeftYUv();

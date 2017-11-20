@@ -30,7 +30,7 @@ namespace cge {
 
 	void helper::coutFramerate() {
 
-		std::cout << 1 / delta << std::endl;
+		std::cout << "fps: " << 1 / delta << std::endl;
 
 	}
 

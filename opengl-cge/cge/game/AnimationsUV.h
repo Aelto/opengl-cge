@@ -52,15 +52,15 @@ namespace cge {
 			animationsMap[(std::string)"__no_animation__"] = impl::AnimationsUV_AnimationDetails(0, 0, _columns, _rows, 1000.0f);
 		};
 
-		// copy constructor
-		AnimationsUV(const AnimationsUV & obj)
-			: SpriteSheetUV(obj.rows, obj.columns, -1.0f, -1) {
-			currentAnimation = obj.currentAnimation;
+		// // copy constructor
+		// AnimationsUV(const AnimationsUV & obj)
+		// 	: SpriteSheetUV(obj.rows, obj.columns, -1.0f, -1) {
+		// 	currentAnimation = obj.currentAnimation;
 
-			for (auto it = obj.animationsMap.begin(); it != obj.animationsMap.end(); ++it) {
-				animationsMap[it->first] = it->second;
-			}
-		};
+		// 	for (auto it = obj.animationsMap.begin(); it != obj.animationsMap.end(); ++it) {
+		// 		animationsMap[it->first] = it->second;
+		// 	}
+		// };
 
 		/**
 		 * try to change the currentAnimation value to the supplied name.

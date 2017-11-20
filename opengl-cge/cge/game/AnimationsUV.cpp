@@ -6,6 +6,9 @@ namespace cge {
 		if (name != (std::string)"__no_animation__" && hasAnimation(name)) {
 			currentAnimation = name; // copy
 			
+			currentColumn = animationsMap[name].beginX;
+			currentRow = animationsMap[name].beginY;
+
 			return true;
 		}
 		
@@ -20,7 +23,7 @@ namespace cge {
 		animationsMap[name] = impl::AnimationsUV_AnimationDetails(_beginX, _beginY, _endX, _endY, _timePerCell);
 
 		if (currentAnimation == std::string("__no_animation__")) {
-			currentAnimation = name;
+			setCurrentAnimation(name);
 		}
 
 		return *this;

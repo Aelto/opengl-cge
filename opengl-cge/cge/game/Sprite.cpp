@@ -24,12 +24,10 @@ namespace cge {
 	}
 
 	bool Sprite::intersects(const Sprite & obj) {
-
 		if (box == nullptr)
 			return false;
 	
-		return box->intersects(obj.box, position, obj.position);
-
+		return box->intersects(obj.box, position, obj.position, size, obj.size);
 	}
 
 	void Sprite::resolve(Sprite & obj) {
