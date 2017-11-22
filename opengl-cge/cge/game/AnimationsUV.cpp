@@ -5,13 +5,13 @@ namespace cge {
 	bool AnimationsUV::setCurrentAnimation(std::string & name) {
 		if (name != (std::string)"__no_animation__" && hasAnimation(name)) {
 			currentAnimation = name; // copy
-			
+
 			currentColumn = animationsMap[name].beginX;
 			currentRow = animationsMap[name].beginY;
 
 			return true;
 		}
-		
+
 		return false;
 	}
 

@@ -78,7 +78,7 @@ namespace cge {
 			fragmentCode = fShaderStream.str();
 
 			// If geometry shader path is present, also load a geometry shader
-			if (gShaderFile != nullptr)	{
+			if (gShaderFile != nullptr) {
 				std::ifstream geometryShaderFile(gShaderFile);
 				std::stringstream gShaderStream;
 				gShaderStream << geometryShaderFile.rdbuf();

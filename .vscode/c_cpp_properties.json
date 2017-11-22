@@ -1,0 +1,8 @@
+{
+    "configurations": [],
+    "version": 3,
+    "includePath": [
+        "${workspaceFolder}/opengl-cge",
+        "${workspaceFolder}/deps/include"
+    ]
+}

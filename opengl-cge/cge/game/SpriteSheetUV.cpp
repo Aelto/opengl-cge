@@ -3,104 +3,109 @@
 #include <iostream>
 
 namespace cge {
+	SpriteSheetUV::SpriteSheetUV() {
 
-    SpriteSheetUV::SpriteSheetUV(int _rows, int _columns, float _timePerCell, int _cells) {
-        rows = _rows;
-        columns = _columns;
+	}
 
-        if (_cells == -1 || _cells > rows * columns) {
-            cells = rows * columns;
-        } else cells = _cells;
+	SpriteSheetUV::SpriteSheetUV(int _rows, int _columns, float _timePerCell, int _cells) {
+		rows = _rows;
+		columns = _columns;
 
-        currentCell = 0;
-        currentRow = 0;
-        currentColumn = 0;
-        currentTime = 0.0f;
+		if (_cells == -1 || _cells > rows * columns) {
+			cells = rows * columns;
+		}
+		else cells = _cells;
 
-        timePerCell = _timePerCell;
+		currentCell = 0;
+		currentRow = 0;
+		currentColumn = 0;
+		currentTime = 0.0f;
 
-        // precompute the X and Y values of a cells
-        xMultiplier = 1.0f / columns;
-        yMultiplier = 1.0f / rows;
-    }
+		timePerCell = _timePerCell;
 
-    SpriteSheetUV::SpriteSheetUV(const SpriteSheetUV & obj)	{
-        rows = obj.rows;
-        columns = obj.columns;
+		// precompute the X and Y values of a cells
+		xMultiplier = 1.0f / columns;
+		yMultiplier = 1.0f / rows;
+	}
 
-        if (obj.cells == -1 || obj.cells > rows * columns) {
-            cells = rows * columns;
-        }
-        else cells = obj.cells;
+	SpriteSheetUV::SpriteSheetUV(const SpriteSheetUV & obj) {
+		rows = obj.rows;
+		columns = obj.columns;
 
-        currentCell = obj.currentCell;
-        currentRow = obj.currentRow;
-        currentColumn = obj.currentColumn;
-        currentTime = obj.currentTime;
+		if (obj.cells == -1 || obj.cells > rows * columns) {
+			cells = rows * columns;
+		}
+		else cells = obj.cells;
 
-        timePerCell = obj.timePerCell;
+		currentCell = obj.currentCell;
+		currentRow = obj.currentRow;
+		currentColumn = obj.currentColumn;
+		currentTime = obj.currentTime;
 
-        // precompute the X and Y values of a cells
-        xMultiplier = 1.0f / columns;
-        yMultiplier = 1.0f / rows;
-    }
+		timePerCell = obj.timePerCell;
 
-    SpriteSheetUV SpriteSheetUV::clone() {
-        return SpriteSheetUV(rows, columns, timePerCell, cells);
-    }
+		// precompute the X and Y values of a cells
+		xMultiplier = 1.0f / columns;
+		yMultiplier = 1.0f / rows;
+	}
 
-    GLfloat SpriteSheetUV::getBottomLeftXUv() {
-        return xMultiplier * currentColumn;
-    }
-    GLfloat SpriteSheetUV::getBottomLeftYUv() {
-        return yMultiplier * currentRow;
-    }
+	SpriteSheetUV SpriteSheetUV::clone() {
+		return SpriteSheetUV(rows, columns, timePerCell, cells);
+	}
 
-    GLfloat SpriteSheetUV::getBottomRightXUv() {
-        return xMultiplier * (currentColumn + 1);
-    }
-    GLfloat SpriteSheetUV::getBottomRightYUv() {
-        return yMultiplier * currentRow;
-    }
+	GLfloat SpriteSheetUV::getBottomLeftXUv() {
+		return xMultiplier * currentColumn;
+	}
+	GLfloat SpriteSheetUV::getBottomLeftYUv() {
+		return yMultiplier * currentRow;
+	}
 
-    GLfloat SpriteSheetUV::getTopLeftXUv() {
-        return xMultiplier * currentColumn;
-    }
-    GLfloat SpriteSheetUV::getTopLeftYUv() {
-        return yMultiplier * (currentRow + 1);
-    }
+	GLfloat SpriteSheetUV::getBottomRightXUv() {
+		return xMultiplier * (currentColumn + 1);
+	}
+	GLfloat SpriteSheetUV::getBottomRightYUv() {
+		return yMultiplier * currentRow;
+	}
 
-    GLfloat SpriteSheetUV::getTopRightXUv() {
-        return xMultiplier * (currentColumn + 1);
-    }
-    GLfloat SpriteSheetUV::getTopRightYUv() {
-        return yMultiplier * (currentRow + 1);
-    }
+	GLfloat SpriteSheetUV::getTopLeftXUv() {
+		return xMultiplier * currentColumn;
+	}
+	GLfloat SpriteSheetUV::getTopLeftYUv() {
+		return yMultiplier * (currentRow + 1);
+	}
 
-    void SpriteSheetUV::nextCell() {
-        currentCell += 1;
+	GLfloat SpriteSheetUV::getTopRightXUv() {
+		return xMultiplier * (currentColumn + 1);
+	}
+	GLfloat SpriteSheetUV::getTopRightYUv() {
+		return yMultiplier * (currentRow + 1);
+	}
 
-        if (currentCell >= cells) {
-            currentCell = 0;
-            currentColumn = 0;
-            currentRow = 0;
+	void SpriteSheetUV::nextCell() {
+		currentCell += 1;
 
-        } else {
-            currentColumn += 1;
+		if (currentCell >= cells) {
+			currentCell = 0;
+			currentColumn = 0;
+			currentRow = 0;
 
-            if (currentColumn >= columns) {
-                currentColumn = 0;
-                currentRow += 1;
-            }
-        }
-    }
+		}
+		else {
+			currentColumn += 1;
 
-    void SpriteSheetUV::time(float delta) {
-        currentTime += delta;
+			if (currentColumn >= columns) {
+				currentColumn = 0;
+				currentRow += 1;
+			}
+		}
+	}
 
-        if (currentTime >= timePerCell) {
-            currentTime = 0;
-            nextCell();
-        }
-    }
+	void SpriteSheetUV::time(float delta) {
+		currentTime += delta;
+
+		if (currentTime >= timePerCell) {
+			currentTime = 0;
+			nextCell();
+		}
+	}
 }

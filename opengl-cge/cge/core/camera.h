@@ -5,10 +5,9 @@
 #include <glm/glm.hpp>
 
 namespace cge {
-	class Camera
-	{
-		public:
-		Camera( GLuint width, GLuint height );
+	class Camera {
+	public:
+		Camera(GLuint width, GLuint height);
 		~Camera();
 
 		/// props
@@ -27,6 +26,6 @@ namespace cge {
 
 		void updateView();
 
-		void runFollow();
+		void runFollow(GLfloat delta);
 	};
 }

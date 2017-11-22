@@ -7,8 +7,7 @@
 namespace cge {
 
 	Camera::Camera(GLuint width, GLuint height)
-		: Position(0.0f, 0.0f, 0.0f), Velocity(0.0f, 0.0f, 0.0f), Front(0.0f, 0.0f, -1.0f), Up(0.0f, 1.0f, 0.0f), MovementSpeed(1.0f), Rotation(0.0f), Width(width), Height(height)
-	{
+		: Position(0.0f, 0.0f, 0.0f), Velocity(0.0f, 0.0f, 0.0f), Front(0.0f, 0.0f, -1.0f), Up(0.0f, 1.0f, 0.0f), MovementSpeed(1.0f), Rotation(0.0f), Width(width), Height(height) {
 		view = glm::lookAt(Position, Position + Front, Up);
 
 		followedPosition = nullptr;
@@ -25,12 +24,11 @@ namespace cge {
 
 	}
 
-	void Camera::runFollow() {
+	void Camera::runFollow(GLfloat delta) {
 
-		if (followedPosition != nullptr)
-		{
-			Position.x += (followedPosition->x - Position.x - Width * anchor.x) * followSpeed;
-			Position.y += (followedPosition->y - Position.y - Height * anchor.y) * followSpeed;
+		if (followedPosition != nullptr) {
+			Position.x += (followedPosition->x - Position.x - Width * anchor.x) * followSpeed * delta;
+			Position.y += (followedPosition->y - Position.y - Height * anchor.y) * followSpeed * delta;
 		}
 
 	}

@@ -21,8 +21,9 @@ namespace cge {
 	};
 
 	class Glyph {
-		public:
-		Glyph( GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLuint _textureID );
+	public:
+		Glyph(GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLuint _textureID);
+		Glyph(GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLuint _textureID, bool inverted);
 		Glyph(GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLuint _textureID,
 			GLfloat topLeftUVx, GLfloat topRightUVx, GLfloat bottomRightUVx, GLfloat bottomLeftUVx,
 			GLfloat topLeftUVy, GLfloat topRightUVy, GLfloat bottomRightUVy, GLfloat bottomLeftUVy);
@@ -36,10 +37,9 @@ namespace cge {
 	};
 
 	class GlyphBatch {
-		public:
-		GlyphBatch( GLuint _textureID, GLuint _verticesNumber, GLuint _offset )
-			: textureID( _textureID ), verticesNumber( _verticesNumber ), offset( _offset )
-		{}
+	public:
+		GlyphBatch(GLuint _textureID, GLuint _verticesNumber, GLuint _offset)
+			: textureID(_textureID), verticesNumber(_verticesNumber), offset(_offset) {}
 
 		GLuint textureID;
 		GLuint verticesNumber;
@@ -47,14 +47,14 @@ namespace cge {
 	};
 
 	class SpriteBatch {
-		public:
+	public:
 		SpriteBatch();
 
 		/// props
 
 		/**
 		 * A list of Glyphs which contain 4 vertices each
-		 * 
+		 *
 		 */
 		std::vector<Glyph> glyphs;
 
@@ -108,6 +108,7 @@ namespace cge {
 		 * vector with this data as parameter
 		 */
 		void draw(GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLuint textureID);
+		void drawInverted(GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLuint textureID);
 		void draw(GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLuint textureID,
 			GLfloat topLeftUVx, GLfloat topRightUVx, GLfloat bottomRightUVx, GLfloat bottomLeftUVx,
 			GLfloat topLeftUVy, GLfloat topRightUVy, GLfloat bottomRightUVy, GLfloat bottomLeftUVy);
@@ -124,7 +125,7 @@ namespace cge {
 		void end();
 
 		/**
-		 * Uses 
+		 * Uses
 		 */
 		void render();
 
@@ -132,7 +133,7 @@ namespace cge {
 
 		void createGlyphBatches();
 
-		static bool compareTexture( Glyph* a, Glyph* b );
+		static bool compareTexture(Glyph* a, Glyph* b);
 
 	};
 

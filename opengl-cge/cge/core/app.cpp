@@ -5,16 +5,14 @@
 namespace cge {
 
 	app::app(GLuint _width, GLuint _height)
-		: width(_width), height(_height)
-	{
+		: width(_width), height(_height) {
 
 		window = nullptr;
 
 	}
 
 
-	app::~app()
-	{
+	app::~app() {
 		app::currentApp = nullptr;
 
 		glfwTerminate();
@@ -41,7 +39,7 @@ namespace cge {
 		glewInit();
 		glGetError(); // get any errors
 
-					  // OpenGL configuration
+		// OpenGL configuration
 		glViewport(0, 0, width, height);
 		glEnable(GL_CULL_FACE);
 		glEnable(GL_BLEND);
@@ -58,14 +56,12 @@ namespace cge {
 
 	}
 
-	void app::keyCallback(GLFWwindow * window, int key, int scancode, int action, int mode)
-	{
+	void app::keyCallback(GLFWwindow * window, int key, int scancode, int action, int mode) {
 
 		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 			glfwSetWindowShouldClose(window, GL_TRUE);
 
-		if (key >= 0 && key < 1024)
-		{
+		if (key >= 0 && key < 1024) {
 			if (action == GLFW_PRESS)
 				keys[key] = true;
 			else if (action == GLFW_RELEASE)
@@ -80,8 +76,7 @@ namespace cge {
 
 	}
 
-	int app::startLoop()
-	{
+	int app::startLoop() {
 
 		glfwPollEvents();
 
@@ -92,8 +87,7 @@ namespace cge {
 
 	}
 
-	void app::endLoop()
-	{
+	void app::endLoop() {
 
 		glfwSwapBuffers(window);
 

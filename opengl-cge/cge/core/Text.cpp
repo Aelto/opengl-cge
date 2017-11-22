@@ -5,7 +5,6 @@
 cge::TextManager::TextManager() {
 	shader = cge::ResourceManager::LoadShader("shaders/text.vs", "shaders/text.frag", nullptr, "cge_textShader");
 	shader.Use();
-	std::cout << shader.ID << std::endl;
 }
 
 bool cge::TextManager::init(GLuint width, GLuint height) {

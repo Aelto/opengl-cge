@@ -18,98 +18,115 @@
 #include "glm\gtc\matrix_transform.hpp"
 
 
-#include "game/assets-uv.h";
-#include "game/constants.h";
+#include "game/utils/assets-uv.h"
+#include "game/utils/constants.h"
+
+GAME::Constants constants;
+GAME::Assets_uv assets_uv;
+
+#include "game/classes/Creature.h"
+#include "game/utils/ShaderStorage.h"
+#include "game/utils/TextureStorage.h"
 
 int main(int argc, char *argv[]) {
-	
 	cge::app app(1280, 900);
-	app.open(4, 3, "opengl engine");
-	
+	app.open(4, 3, "Opengl engine");
+
 	cge::Camera camera(app.width, app.height);
+	camera.followSpeed = 6.0f;
+
 	cge::helper helper;
 	cge::TextManager textManager;
 	textManager.init(app.width, app.height);
 
-	// load and compile our shaders
-	cge::Shader cgeShader = cge::ResourceManager::LoadShader("./shaders/cge.vs", "./shaders/cge.frag", nullptr, "cge");
-	cgeShader.Use();
-	cgeShader.SetMatrix4("projection", glm::ortho(0.0f, static_cast<GLfloat>(app.width), 0.0f, static_cast<GLfloat>(app.height)));
-	cgeShader.SetMatrix4("view", camera.view);
-	cgeShader.SetVector3f("spriteColor", glm::vec3(1.0f, 1.0f, 1.0f));
-	
-	cge::Texture2D TEXTURE = cge::ResourceManager::LoadTexture("assets/assets.png", GL_TRUE, "assets");
+	GAME::ShaderStorage shaderStorage(app, camera);
+	GAME::TextureStorage textureStorage;
 
-	cge::SpriteBatch batch;
 
-	cge::SpriteAnimation player(
+	//cge::Texture2D TEXTURE = cge::ResourceManager::LoadTexture("assets/assets.png", GL_TRUE, "assets");
+
+	auto player = cge::SpriteAnimation(
 		glm::vec2(16, 16),
-		glm::vec2(GAME::constants::tile_size, GAME::constants::tile_size),
-		&TEXTURE,
-		GAME::assets_uv::CREATURES[20]);
+		glm::vec2(constants.tile_size, constants.tile_size),
+		&textureStorage.assetsPNG,
+		assets_uv.CHARACTERS[6]);
+
+	camera.followedPosition = &player.position;
 
 	std::vector<cge::SpriteAnimation> floors;
 	for (auto x = 0; x < 10; x += 1)
 		for (auto y = 0; y < 10; y += 1) {
 			floors.push_back(
 				cge::SpriteAnimation(
-					glm::vec2(x * GAME::constants::tile_size, y * GAME::constants::tile_size),
-					glm::vec2(GAME::constants::tile_size, GAME::constants::tile_size),
-					&TEXTURE,
-					GAME::assets_uv::FLOORS[5]
+					glm::vec2(x * constants.tile_size, y * constants.tile_size),
+					glm::vec2(constants.tile_size, constants.tile_size),
+					&textureStorage.assetsPNG,
+					assets_uv.FLOORS[5]
 				)
 			);
 		}
 
-	
-
 	cge::SpriteAnimation wall(
 		glm::vec2(app.width / 2, app.height / 2),
-		glm::vec2(GAME::constants::tile_size * 2, GAME::constants::tile_size * 2),
-		&TEXTURE,
-		GAME::assets_uv::WALLS[0]);
+		glm::vec2(constants.tile_size * 2, constants.tile_size * 2),
+		&textureStorage.assetsPNG,
+		assets_uv.WALLS[0]);
 
-	cge::Hitbox wallBox(glm::vec2(1.0f, 0.6f), glm::vec2(0.5f, 0.5f));
+	GAME::Creature creature(
+		glm::vec2(150, 150),
+		glm::vec2(constants.tile_size, constants.tile_size),
+		&textureStorage.assetsPNG,
+		assets_uv.CREATURES[0]
+	);
+
+	cge::Hitbox wallBox(glm::vec2(1.0f, 0.3f), glm::vec2(0.5f, 0.2f));
 	cge::Hitbox playerBox(glm::vec2(0.5f, 0.5f), glm::vec2(0.5f, 0.5f));
 	wall.addBox(&wallBox);
 	player.addBox(&playerBox);
 
+	cge::SpriteBatch batch;
 	GLfloat delta = helper.getDelta();
 	while (!app.startLoop()) {
 		delta = helper.getDelta();
 		helper.coutFramerate();
+		camera.runFollow(delta);
 		camera.updateView();
 
+		shaderStorage.defaultShader.SetMatrix4("view", camera.view);
+		//cgeShader.SetMatrix4("view", camera.view);
+
 		if (app.keys[GLFW_KEY_W])
-			player.acceleration.y += GAME::constants::hero_speed * delta;
+			player.acceleration.y += constants.hero_speed * delta;
 		if (app.keys[GLFW_KEY_A])
-			player.acceleration.x -= GAME::constants::hero_speed * delta;
+			player.acceleration.x -= constants.hero_speed * delta;
 		if (app.keys[GLFW_KEY_D])
-			player.acceleration.x += GAME::constants::hero_speed * delta;
+			player.acceleration.x += constants.hero_speed * delta;
 		if (app.keys[GLFW_KEY_S])
-			player.acceleration.y -= GAME::constants::hero_speed * delta;
+			player.acceleration.y -= constants.hero_speed * delta;
+
+		if (app.keys[GLFW_KEY_I])
+			creature.inverted = !creature.inverted;
 
 		player.applyAcceleration(delta);
 		player.applyVelocity(delta);
 
 		if (player.intersects(wall)) {
+			player.acceleration *= 0;
 			player.position -= player.velocity;
-			// player.resolve(wall);
 		}
 
 		player.applyFriction(0.9f);
 
-		
-			
-
 		batch.begin();
 
-		
+
 		for (auto & floor : floors)
 			floor.batchDraw(batch);
 
 		wall.batchDraw(batch);
+		creature.batchDraw(batch);
 		player.batchDraw(batch);
+
 
 		batch.end();
 		batch.render();

@@ -12,11 +12,11 @@ namespace cge {
 
 		velocity = glm::vec2(0.0f, 0.0f);
 		acceleration = glm::vec2(0.0f, 0.0f);
-		
+
 		box = nullptr;
 	}
 
-	void SpriteSheet::batchDraw(cge::SpriteBatch & spriteBatch)	{
+	void SpriteSheet::batchDraw(cge::SpriteBatch & spriteBatch) {
 		spriteBatch.draw(position.x, position.y, size.x, size.y, texture->ID,
 			spriteSheetUV.getTopLeftXUv(), spriteSheetUV.getTopRightXUv(), spriteSheetUV.getBottomRightXUv(), spriteSheetUV.getBottomLeftXUv(),
 			spriteSheetUV.getTopLeftYUv(), spriteSheetUV.getTopRightYUv(), spriteSheetUV.getBottomRightYUv(), spriteSheetUV.getBottomLeftYUv());

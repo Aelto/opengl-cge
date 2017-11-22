@@ -10,14 +10,23 @@ namespace cge {
 
 		velocity = glm::vec2(0.0f, 0.0f);
 		acceleration = glm::vec2(0.0f, 0.0f);
+		inverted = false;
 
 		box = nullptr;
 	}
 
 	void SpriteAnimation::batchDraw(cge::SpriteBatch & spriteBatch) {
-		spriteBatch.draw(position.x, position.y, size.x, size.y, texture->ID,
-			animationsUV.getTopLeftXUv(), animationsUV.getTopRightXUv(), animationsUV.getBottomRightXUv(), animationsUV.getBottomLeftXUv(),
-			animationsUV.getTopLeftYUv(), animationsUV.getTopRightYUv(), animationsUV.getBottomRightYUv(), animationsUV.getBottomLeftYUv());
+		if (inverted) {
+			spriteBatch.draw(position.x, position.y, size.x, size.y, texture->ID,
+				animationsUV.getTopRightXUv(), animationsUV.getTopLeftXUv(), animationsUV.getBottomLeftXUv(), animationsUV.getBottomRightXUv(),
+				animationsUV.getTopRightYUv(), animationsUV.getTopLeftYUv(), animationsUV.getBottomLeftYUv(), animationsUV.getBottomRightYUv());
+		}
+
+		else {
+			spriteBatch.draw(position.x, position.y, size.x, size.y, texture->ID,
+				animationsUV.getTopLeftXUv(), animationsUV.getTopRightXUv(), animationsUV.getBottomRightXUv(), animationsUV.getBottomLeftXUv(),
+				animationsUV.getTopLeftYUv(), animationsUV.getTopRightYUv(), animationsUV.getBottomRightYUv(), animationsUV.getBottomLeftYUv());
+		}
 	}
 
 	void SpriteAnimation::time(float delta) {

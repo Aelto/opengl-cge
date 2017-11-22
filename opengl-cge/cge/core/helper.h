@@ -5,9 +5,8 @@
 #include <GLFW/glfw3.h>
 
 namespace cge {
-	class helper
-	{
-		public:
+	class helper {
+	public:
 		helper();
 		~helper();
 

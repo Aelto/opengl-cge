@@ -15,7 +15,7 @@ namespace cge {
 		class AnimationsUV_AnimationDetails {
 		public:
 			int beginX;
-			
+
 			int beginY;
 
 			int endX;
@@ -24,7 +24,7 @@ namespace cge {
 
 			float timePerCell;
 
-			AnimationsUV_AnimationDetails(int _beginX, int _beginY, int _endX, int _endY, float _timePerCell) 
+			AnimationsUV_AnimationDetails(int _beginX, int _beginY, int _endX, int _endY, float _timePerCell)
 				: beginX(_beginX), beginY(_beginY), endX(_endX), endY(_endY), timePerCell(_timePerCell) {};
 
 			// copy  constructor
@@ -36,7 +36,7 @@ namespace cge {
 		};
 	}
 
-	
+
 
 	class AnimationsUV : public SpriteSheetUV {
 	public:
@@ -44,6 +44,8 @@ namespace cge {
 		std::unordered_map<std::string, impl::AnimationsUV_AnimationDetails> animationsMap;
 
 		std::string currentAnimation;
+
+		AnimationsUV() {};
 
 		AnimationsUV(int _rows, int _columns)
 			: SpriteSheetUV(_rows, _columns, -1.0f, -1) {

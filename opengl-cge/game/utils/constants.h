@@ -1,3 +1,4 @@
+#pragma once
 
 #define GLEW_STATIC
 #include <GL\glew.h>
@@ -6,8 +7,14 @@
 #include "glm\gtc\matrix_transform.hpp"
 
 namespace GAME {
-  namespace constants {
-    float hero_speed = 30.0f;
-    int tile_size = 128;
-  }
+	class Constants {
+	public:
+		Constants() {
+			hero_speed = 60.0f;
+			tile_size = 128;
+		};
+
+		float hero_speed;
+		int tile_size;
+	};
 }

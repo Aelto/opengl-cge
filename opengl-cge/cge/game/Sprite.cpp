@@ -2,15 +2,13 @@
 
 namespace cge {
 	Sprite::Sprite()
-		: position(0.0f, 0.0f), velocity(0.0f, 0.0f), acceleration(0.0f, 0.0f), size(10.0f, 10.0f), texture(nullptr), box(nullptr)
-	{}
+		: position(0.0f, 0.0f), velocity(0.0f, 0.0f), acceleration(0.0f, 0.0f), size(10.0f, 10.0f), texture(nullptr), box(nullptr) {}
 
 	Sprite::Sprite(glm::vec2 pos, glm::vec2 size, cge::Texture2D * _texture)
-		: position(pos), velocity(0.0f, 0.0f), acceleration(0.0f, 0.0f), size(size), texture(_texture), box(nullptr)
-	{}
+		: position(pos), velocity(0.0f, 0.0f), acceleration(0.0f, 0.0f), size(size), texture(_texture), box(nullptr) {}
 
 
-	void Sprite::batchDraw(cge::SpriteBatch & spriteBatch)	{
+	void Sprite::batchDraw(cge::SpriteBatch & spriteBatch) {
 
 		spriteBatch.draw(position.x, position.y, size.x, size.y, texture->ID);
 
@@ -18,15 +16,15 @@ namespace cge {
 
 
 	glm::vec2 Sprite::distanceTo(const glm::vec2 & pos) {
-		
-		return glm::vec2( position.x - pos.x, position.y - pos.y );
+
+		return glm::vec2(position.x - pos.x, position.y - pos.y);
 
 	}
 
 	bool Sprite::intersects(const Sprite & obj) {
 		if (box == nullptr)
 			return false;
-	
+
 		return box->intersects(obj.box, position, obj.position, size, obj.size);
 	}
 
@@ -62,7 +60,7 @@ namespace cge {
 
 	}
 
-	void Sprite::applyFriction(const GLfloat factor)	{
+	void Sprite::applyFriction(const GLfloat factor) {
 		velocity *= factor;
 	}
 }
