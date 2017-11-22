@@ -85,6 +85,10 @@ int main(int argc, char *argv[]) {
 	cge::Hitbox playerBox(glm::vec2(0.5f, 0.5f), glm::vec2(0.5f, 0.5f));
 	for (auto & wall : walls) wall.addBox(&wallBox);
 	player.addBox(&playerBox);
+	creature.addBox(&playerBox);
+
+	player.movespeed = 100.0f;
+	creature.movespeed = 50.0f;
 
 	cge::SpriteBatch batch;
 	GLfloat delta = helper.getDelta();

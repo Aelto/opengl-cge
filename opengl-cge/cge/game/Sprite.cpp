@@ -2,10 +2,10 @@
 
 namespace cge {
 	Sprite::Sprite()
-		: position(0.0f, 0.0f), velocity(0.0f, 0.0f), acceleration(0.0f, 0.0f), size(10.0f, 10.0f), texture(nullptr), box(nullptr) {}
+		: position(0.0f, 0.0f), size(10.0f, 10.0f), texture(nullptr), box(nullptr) {}
 
 	Sprite::Sprite(glm::vec2 pos, glm::vec2 size, cge::Texture2D * _texture)
-		: position(pos), velocity(0.0f, 0.0f), acceleration(0.0f, 0.0f), size(size), texture(_texture), box(nullptr) {}
+		: position(pos), size(size), texture(_texture), box(nullptr) {}
 
 
 	void Sprite::batchDraw(cge::SpriteBatch & spriteBatch) {
@@ -38,29 +38,5 @@ namespace cge {
 
 		box = _box;
 
-	}
-
-	void Sprite::applyAcceleration(const GLfloat delta) {
-
-		velocity.x += acceleration.x * delta;
-		velocity.y += acceleration.y * delta;
-
-		acceleration.x = 0;
-		acceleration.y = 0;
-
-	}
-
-	void Sprite::applyVelocity(const GLfloat delta) {
-
-		position.x += velocity.x;
-		position.y += velocity.y;
-
-		oldTranslation.x = velocity.x;
-		oldTranslation.y = velocity.y;
-
-	}
-
-	void Sprite::applyFriction(const GLfloat factor) {
-		velocity *= factor;
 	}
 }

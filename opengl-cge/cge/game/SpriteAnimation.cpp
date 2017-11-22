@@ -7,9 +7,6 @@ namespace cge {
 		position = pos;
 		size = _size;
 		texture = _texture;
-
-		velocity = glm::vec2(0.0f, 0.0f);
-		acceleration = glm::vec2(0.0f, 0.0f);
 		inverted = false;
 
 		box = nullptr;
