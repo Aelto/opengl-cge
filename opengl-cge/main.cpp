@@ -24,7 +24,8 @@
 GAME::Constants constants;
 GAME::Assets_uv assets_uv;
 
-#include "game/classes/Creature.h"
+#include "game/classes/entities/Creature.h"
+#include "game/classes/entities/Entity.h"
 #include "game/utils/ShaderStorage.h"
 #include "game/utils/TextureStorage.h"
 
@@ -45,7 +46,7 @@ int main(int argc, char *argv[]) {
 
 	//cge::Texture2D TEXTURE = cge::ResourceManager::LoadTexture("assets/assets.png", GL_TRUE, "assets");
 
-	auto player = cge::SpriteAnimation(
+	auto player = GAME::Player(
 		glm::vec2(16, 16),
 		glm::vec2(constants.tile_size, constants.tile_size),
 		&textureStorage.assetsPNG,
@@ -66,11 +67,12 @@ int main(int argc, char *argv[]) {
 			);
 		}
 
-	cge::SpriteAnimation wall(
+	std::vector<GAME::Entity> walls;
+	walls.push_back(GAME::Entity(
 		glm::vec2(app.width / 2, app.height / 2),
 		glm::vec2(constants.tile_size * 2, constants.tile_size * 2),
 		&textureStorage.assetsPNG,
-		assets_uv.WALLS[0]);
+		assets_uv.WALLS[0]));
 
 	GAME::Creature creature(
 		glm::vec2(150, 150),
@@ -81,7 +83,7 @@ int main(int argc, char *argv[]) {
 
 	cge::Hitbox wallBox(glm::vec2(1.0f, 0.3f), glm::vec2(0.5f, 0.2f));
 	cge::Hitbox playerBox(glm::vec2(0.5f, 0.5f), glm::vec2(0.5f, 0.5f));
-	wall.addBox(&wallBox);
+	for (auto & wall : walls) wall.addBox(&wallBox);
 	player.addBox(&playerBox);
 
 	cge::SpriteBatch batch;
@@ -93,39 +95,31 @@ int main(int argc, char *argv[]) {
 		camera.updateView();
 
 		shaderStorage.defaultShader.SetMatrix4("view", camera.view);
-		//cgeShader.SetMatrix4("view", camera.view);
 
 		if (app.keys[GLFW_KEY_W])
-			player.acceleration.y += constants.hero_speed * delta;
+			player.acceleration.y += constants.hero_speed;
 		if (app.keys[GLFW_KEY_A])
-			player.acceleration.x -= constants.hero_speed * delta;
+			player.acceleration.x -= constants.hero_speed;
 		if (app.keys[GLFW_KEY_D])
-			player.acceleration.x += constants.hero_speed * delta;
+			player.acceleration.x += constants.hero_speed;
 		if (app.keys[GLFW_KEY_S])
-			player.acceleration.y -= constants.hero_speed * delta;
+			player.acceleration.y -= constants.hero_speed;
 
-		if (app.keys[GLFW_KEY_I])
-			creature.inverted = !creature.inverted;
-
-		player.applyAcceleration(delta);
-		player.applyVelocity(delta);
-
-		if (player.intersects(wall)) {
-			player.acceleration *= 0;
-			player.position -= player.velocity;
-		}
-
-		player.applyFriction(0.9f);
+		player.mainBehavior(delta, walls);
+		creature.mainBehavior(delta, walls);
 
 		batch.begin();
-
 
 		for (auto & floor : floors)
 			floor.batchDraw(batch);
 
-		wall.batchDraw(batch);
+		for (auto & wall : walls) 
+			wall.batchDraw(batch);
+
 		creature.batchDraw(batch);
 		player.batchDraw(batch);
+
+		creature.interactWithPlayer(player);
 
 
 		batch.end();

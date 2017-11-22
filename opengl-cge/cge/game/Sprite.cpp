@@ -42,8 +42,8 @@ namespace cge {
 
 	void Sprite::applyAcceleration(const GLfloat delta) {
 
-		velocity.x += acceleration.x;
-		velocity.y += acceleration.y;
+		velocity.x += acceleration.x * delta;
+		velocity.y += acceleration.y * delta;
 
 		acceleration.x = 0;
 		acceleration.y = 0;

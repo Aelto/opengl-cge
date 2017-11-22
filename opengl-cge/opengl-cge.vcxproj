@@ -33,7 +33,8 @@
     <ClCompile Include="cge\game\SpriteSheetUV.cpp" />
     <ClCompile Include="cge\core\Texture.cpp" />
     <ClCompile Include="game\classes\entities\Entity.cpp" />
-    <ClCompile Include="game\classes\Creature.cpp" />
+    <ClCompile Include="game\classes\entities\Creature.cpp" />
+    <ClCompile Include="game\classes\entities\Player.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="cge\game\SpriteSheet.cpp" />
   </ItemGroup>
@@ -54,9 +55,10 @@
     <ClInclude Include="cge\core\Texture.h" />
     <ClInclude Include="cge\game\SpriteSheet.h" />
     <ClInclude Include="game\classes\entities\Entity.h" />
+    <ClInclude Include="game\classes\entities\Player.h" />
     <ClInclude Include="game\utils\assets-uv.h" />
     <ClInclude Include="game\utils\constants.h" />
-    <ClInclude Include="game\classes\Creature.h" />
+    <ClInclude Include="game\classes\entities\Creature.h" />
     <ClInclude Include="game\utils\EntityBuilder.h" />
     <ClInclude Include="game\utils\ShaderStorage.h" />
     <ClInclude Include="game\utils\TextureStorage.h" />

@@ -60,10 +60,13 @@
     <ClCompile Include="cge\core\Text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\classes\Creature.cpp">
+    <ClCompile Include="game\classes\entities\Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\classes\entities\Entity.cpp">
+    <ClCompile Include="game\classes\entities\Creature.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\classes\entities\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -128,10 +131,13 @@
     <ClInclude Include="game\utils\EntityBuilder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\classes\Creature.h">
+    <ClInclude Include="game\classes\entities\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\classes\entities\Entity.h">
+    <ClInclude Include="game\classes\entities\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\classes\entities\Creature.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
