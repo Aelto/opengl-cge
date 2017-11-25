@@ -12,9 +12,11 @@ namespace GAME {
 		Constants() {
 			hero_speed = 60.0f;
 			tile_size = 128;
+			pointer_size = 64;
 		};
 
 		float hero_speed;
 		int tile_size;
+		int pointer_size;
 	};
 }

@@ -7,8 +7,9 @@ namespace GAME {
 		glm::vec2 pos,
 		glm::vec2 size,
 		cge::Texture2D * texture,
-		cge::AnimationsUV animationsUV)
-		: Entity(pos, size, texture, animationsUV) {}
+		cge::AnimationsUV animationsUV,
+		bool isSpriteInverted)
+		: Entity(pos, size, texture, animationsUV, isSpriteInverted) {}
 
 	void GAME::Creature::interactWithPlayer(Player & player) {
 		

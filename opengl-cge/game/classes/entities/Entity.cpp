@@ -6,22 +6,24 @@ namespace GAME {
 	Entity::Entity()
 		: velocity(0.0f, 0.0f), acceleration(0.0f, 0.0f) {}
 
-	Entity::Entity(glm::vec2 pos, glm::vec2 _size, cge::Texture2D * _texture, cge::AnimationsUV _animationsUV)
-		: cge::SpriteAnimation(pos, _size, _texture, _animationsUV), velocity(0.0f, 0.0f), acceleration(0.0f, 0.0f), movespeed(1.0f) {}
+	Entity::Entity(glm::vec2 pos, glm::vec2 _size, cge::Texture2D * _texture, cge::AnimationsUV _animationsUV, bool isSpriteInverted)
+		: cge::SpriteAnimation(pos, _size, _texture, _animationsUV), velocity(0.0f, 0.0f), acceleration(0.0f, 0.0f), movespeed(1.0f) {
+		this->isSpriteInverted = isSpriteInverted;
+	}
 
 	void Entity::mainBehavior(GLfloat delta, std::vector<Entity> & collisionEntities) {
 
 		if (velocity.x < 0)
-			inverted = true;
-		else inverted = false;
+			inverted = !isSpriteInverted;
+		else inverted = isSpriteInverted;
 
 		applyAcceleration(delta);
 		applyVelocity(delta);
 
 		for (auto & entity : collisionEntities)
 			if (intersects(entity)) {
-				acceleration *= 0;
-				position -= velocity;
+				position.x -= velocity.x;
+				position.y -= velocity.y;
 			}
 
 		applyFriction(0.9f);

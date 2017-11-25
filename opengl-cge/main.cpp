@@ -29,6 +29,13 @@ GAME::Assets_uv assets_uv;
 #include "game/utils/ShaderStorage.h"
 #include "game/utils/TextureStorage.h"
 
+inline void drawCursor(cge::app & app, cge::Camera & camera, cge::SpriteAnimation & cursor, cge::SpriteBatch & batch);
+
+/**
+ * TODO: faire une classe Room, qui permettrait de render une room complète avec tout ses murs,
+ * le sol, les portes
+ */
+
 int main(int argc, char *argv[]) {
 	cge::app app(1280, 900);
 	app.open(4, 3, "Opengl engine");
@@ -43,8 +50,10 @@ int main(int argc, char *argv[]) {
 	GAME::ShaderStorage shaderStorage(app, camera);
 	GAME::TextureStorage textureStorage;
 
+	glfwSetInputMode(app.window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
-	//cge::Texture2D TEXTURE = cge::ResourceManager::LoadTexture("assets/assets.png", GL_TRUE, "assets");
+	auto cursor = cge::SpriteAnimation(glm::vec2(0, 0), glm::vec2(constants.pointer_size), &textureStorage.pointerPNG, cge::AnimationsUV(1, 1)
+		.setAnimation(std::string("default"), 1, 1, 1, 1, 1000));
 
 	auto player = GAME::Player(
 		glm::vec2(16, 16),
@@ -78,7 +87,8 @@ int main(int argc, char *argv[]) {
 		glm::vec2(150, 150),
 		glm::vec2(constants.tile_size, constants.tile_size),
 		&textureStorage.assetsPNG,
-		assets_uv.CREATURES[0]
+		assets_uv.CREATURES[0],
+		true
 	);
 
 	cge::Hitbox wallBox(glm::vec2(1.0f, 0.3f), glm::vec2(0.5f, 0.2f));
@@ -109,6 +119,11 @@ int main(int argc, char *argv[]) {
 		if (app.keys[GLFW_KEY_S])
 			player.acceleration.y -= constants.hero_speed;
 
+		if (app.keys[GLFW_KEY_I])
+			player.rotate += 1.0f * delta;
+		if (app.keys[GLFW_KEY_U])
+			player.rotate -= 1.0f * delta;
+
 		player.mainBehavior(delta, walls);
 		creature.mainBehavior(delta, walls);
 
@@ -124,8 +139,7 @@ int main(int argc, char *argv[]) {
 		player.batchDraw(batch);
 
 		creature.interactWithPlayer(player);
-
-
+		drawCursor(app, camera, cursor, batch);
 		batch.end();
 		batch.render();
 
@@ -137,4 +151,10 @@ int main(int argc, char *argv[]) {
 
 	return 0;
 
+}
+
+inline void drawCursor(cge::app & app, cge::Camera & camera, cge::SpriteAnimation & cursor, cge::SpriteBatch & batch) {
+	cursor.position.x = app.mousePosition.x + camera.Position.x;
+	cursor.position.y = app.height - app.mousePosition.y + camera.Position.y;
+	cursor.batchDraw(batch);
 }

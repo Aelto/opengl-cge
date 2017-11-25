@@ -34,6 +34,7 @@ namespace cge {
 
 		app::currentApp = this;
 		glfwSetKeyCallback(window, app::keyCallback_dispatch);
+		glfwSetCursorPosCallback(window, app::mouseCallback_dispatch);
 
 		glewExperimental = GL_TRUE;
 		glewInit();
@@ -56,6 +57,13 @@ namespace cge {
 
 	}
 
+	void app::mouseCallback_dispatch(GLFWwindow * window, double xpos, double ypos) {
+	
+		if (app::currentApp)
+			app::currentApp->mouseCallback(window, xpos, ypos);
+
+	}
+
 	void app::keyCallback(GLFWwindow * window, int key, int scancode, int action, int mode) {
 
 		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
@@ -68,6 +76,11 @@ namespace cge {
 				keys[key] = false;
 		}
 
+	}
+
+	void app::mouseCallback(GLFWwindow * window, double xpos, double ypos) {
+		mousePosition.x = xpos;
+		mousePosition.y = ypos;
 	}
 
 	int app::shouldClose() {

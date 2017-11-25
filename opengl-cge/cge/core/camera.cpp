@@ -21,6 +21,7 @@ namespace cge {
 	void Camera::updateView() {
 
 		view = glm::lookAt(Position, Position + Front, Up);
+		//view = glm::rotate(glm::lookAt(Position, Position + Front, Up), 0.0f, glm::vec<3, float>(0.0f, 0.0f, 1.0f));
 
 	}
 
@@ -31,6 +32,14 @@ namespace cge {
 			Position.y += (followedPosition->y - Position.y - Height * anchor.y) * followSpeed * delta;
 		}
 
+	}
+
+	float Camera::getAbsolutePositionX(float in) {
+		return in + Position.x;
+	}
+
+	float Camera::getAbsolutePositionY(float in) {
+		return in + Position.y;
 	}
 
 }

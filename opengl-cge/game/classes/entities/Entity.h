@@ -14,15 +14,16 @@ namespace GAME {
 	class Entity : public cge::SpriteAnimation {
 	public:
 		Entity();
-		Entity(glm::vec2 pos, glm::vec2 _size, cge::Texture2D * _texture, cge::AnimationsUV _animationsUV);
+		Entity(glm::vec2 pos, glm::vec2 _size, cge::Texture2D * _texture, cge::AnimationsUV _animationsUV, bool isSpriteInverted = false);
 
 		void mainBehavior(GLfloat delta, std::vector<Entity> & collisionEntities);
 
+		bool isSpriteInverted;
 		float movespeed;
 		glm::vec2 oldTranslation;
 
 		/**
-		 * Should not be touched manually,
+		 * Should not be changed manually,
 		 * use the acceleration instead if you want to move the element
 		 * based on the delta and the movespeed.
 		 */

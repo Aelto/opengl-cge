@@ -27,5 +27,8 @@ namespace cge {
 		void updateView();
 
 		void runFollow(GLfloat delta);
+
+		float getAbsolutePositionX(float in);
+		float getAbsolutePositionY(float in);
 	};
 }
