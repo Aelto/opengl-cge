@@ -22,6 +22,7 @@
     <ClCompile Include="cge\core\app.cpp" />
     <ClCompile Include="cge\core\camera.cpp" />
     <ClCompile Include="cge\core\helper.cpp" />
+    <ClCompile Include="cge\core\SpriteRenderer.cpp" />
     <ClCompile Include="cge\core\Text.cpp" />
     <ClCompile Include="cge\game\AnimationsUV.cpp" />
     <ClCompile Include="cge\game\Hitbox.cpp" />
@@ -43,6 +44,7 @@
     <ClInclude Include="cge\core\app.h" />
     <ClInclude Include="cge\core\camera.h" />
     <ClInclude Include="cge\core\helper.h" />
+    <ClInclude Include="cge\core\SpriteRenderer.h" />
     <ClInclude Include="cge\core\Text.h" />
     <ClInclude Include="cge\game\AnimationsUV.h" />
     <ClInclude Include="cge\game\Hitbox.h" />

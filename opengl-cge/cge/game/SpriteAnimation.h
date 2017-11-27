@@ -4,6 +4,7 @@
 #include "AnimationsUV.h"
 
 #include "../core/SpriteBatch.h"
+#include "../core/SpriteRenderer.h"
 
 namespace cge {
 
@@ -20,6 +21,8 @@ namespace cge {
 		* to be able to create vertices for this object
 		*/
 		virtual void batchDraw(cge::SpriteBatch & spriteBatch);
+
+		virtual void draw(cge::SpriteRenderer & spriteRenderer);
 
 		void time(float delta);
 

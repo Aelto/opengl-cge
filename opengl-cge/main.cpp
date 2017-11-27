@@ -101,14 +101,13 @@ int main(int argc, char *argv[]) {
 	creature.movespeed = 50.0f;
 
 	cge::SpriteBatch batch;
+	cge::SpriteRenderer spriteRenderer;
 	GLfloat delta = helper.getDelta();
 	while (!app.startLoop()) {
 		delta = helper.getDelta();
-		helper.coutFramerate();
+		// helper.coutFramerate();
 		camera.runFollow(delta);
 		camera.updateView();
-
-		shaderStorage.defaultShader.SetMatrix4("view", camera.view);
 
 		if (app.keys[GLFW_KEY_W])
 			player.acceleration.y += constants.hero_speed;
@@ -136,12 +135,28 @@ int main(int argc, char *argv[]) {
 			wall.batchDraw(batch);
 
 		creature.batchDraw(batch);
-		player.batchDraw(batch);
+		// player.batchDraw(batch);
 
 		creature.interactWithPlayer(player);
 		drawCursor(app, camera, cursor, batch);
+		
+		shaderStorage.spritebatchShader.Use();
+		shaderStorage.spritebatchShader.SetMatrix4("view", camera.view);
 		batch.end();
 		batch.render();
+
+
+
+
+		spriteRenderer.begin();
+
+		player.draw(spriteRenderer);
+
+
+		shaderStorage.spriterendererShader.Use();
+		shaderStorage.spriterendererShader.SetMatrix4("view", camera.view);
+		spriteRenderer.end();
+		spriteRenderer.render(shaderStorage.spriterendererShader);
 
 		// player.time(delta * 1000.0f);
 

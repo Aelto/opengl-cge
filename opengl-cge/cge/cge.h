@@ -12,6 +12,7 @@
 #include "core\Shader.h"
 #include "core\Texture.h"
 #include "core\SpriteBatch.h"
+#include "core\SpriteRenderer.h"
 #include "core\Text.h"
 
 // Classes used for the game engine
