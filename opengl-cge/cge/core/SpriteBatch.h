@@ -79,6 +79,8 @@ namespace cge {
 		 */
 		GLuint quadVBO;
 
+		GLuint quadIBO;
+
 		/**
 		 * Stores a cge::Shader object to hold and use as
 		 * default fragment and vertex shaders

@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <iostream>
 
+// TODO : https://stackoverflow.com/questions/27676966/spritebatch-only-drawing-first-sprite
+
 namespace cge {
 
 	/// Glyph
@@ -103,6 +105,8 @@ namespace cge {
 		// generates a VBO and stores its ID into quadVBO
 		glGenBuffers(1, &quadVBO);
 
+		glGenBuffers(1, &quadIBO);
+
 		// create our VAO
 		createVAO();
 
@@ -122,11 +126,16 @@ namespace cge {
 		// it's a vector4 ( X_position, Y_position, X_uv_coordinates, Y_uv_coordinates )
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
 
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quadIBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 0, nullptr, GL_STATIC_DRAW);
+
 		// Unbind the VAO
 		glBindVertexArray(0);
 
 		// We unbind the VBO outside of the VAO
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	}
 
@@ -196,20 +205,13 @@ namespace cge {
 
 	void SpriteBatch::render() {
 
-		// Bind our VAO. This sets up the opengl state we need, including the 
-		// vertex attribute pointers and it binds the VBO
 		glBindVertexArray(quadVAO);
 
 		auto b_size = glyphBatches.size();
-
 		for (size_t i = 0; i < b_size; i++) {
-
-			int b = 1;
-
 			glBindTexture(GL_TEXTURE_2D, glyphBatches[i].textureID);
 
-			glDrawArrays(GL_TRIANGLES, glyphBatches[i].offset, glyphBatches[i].verticesNumber);
-
+			glDrawElementsBaseVertex(GL_TRIANGLES, glyphBatches[i].verticesNumber * 1.5, GL_UNSIGNED_INT, 0, glyphBatches[i].offset);
 		}
 
 		glBindVertexArray(0);
@@ -226,56 +228,69 @@ namespace cge {
 
 		// prepare the list of vertices we'll send to the gpu
 		std::vector<Vertex> vertices;
-		vertices.resize(glyphs_map.size() * 6);
+		vertices.resize(glyphs_map.size() * 4);
 
+		std::vector<GLuint> indices;
+		indices.resize(glyphs_map.size() * 6);
 
 		if (glyphs_map.empty())
 			return;
 
 		int offset = 0; // current offset
 		int cv = 0; // current vertex
+		int ci = 0; // current index
 
 		//Add the first batch
-		glyphBatches.emplace_back(glyphs_map[0]->textureID, 6, offset);
-		vertices[cv++] = glyphs_map[0]->topLeft;
-		vertices[cv++] = glyphs_map[0]->topRight;
-		vertices[cv++] = glyphs_map[0]->bottomLeft;
+		glyphBatches.emplace_back(glyphs_map[0]->textureID, 4, offset);
+
+		indices[ci++] = cv;
+		indices[ci++] = cv + 1;
+		indices[ci++] = cv + 3;
+		indices[ci++] = cv + 1;
+		indices[ci++] = cv + 2;
+		indices[ci++] = cv + 3;
+
 		vertices[cv++] = glyphs_map[0]->topRight;
 		vertices[cv++] = glyphs_map[0]->bottomRight;
 		vertices[cv++] = glyphs_map[0]->bottomLeft;
-		offset += 6;
+		vertices[cv++] = glyphs_map[0]->topLeft;
+		offset += 4;
 
 		auto g_size = glyphs_map.size();
 		//Add all the rest of the glyphs
 		for (size_t cg = 1; cg < g_size; cg++) {
 
-			// Check if this glyph can be part of the current batch
+			// check if this glyph can be part of the current batch
 			if (glyphs_map[cg]->textureID != glyphs_map[cg - 1]->textureID) {
-				// Make a new batch
-				glyphBatches.emplace_back(glyphs_map[cg]->textureID, 6, offset);
+				// make a new batch
+				glyphBatches.emplace_back(glyphs_map[cg]->textureID, 4, offset);
 			}
 			else {
-				// If its part of the current batch, just increase numVertices
-				glyphBatches.back().verticesNumber += 6;
+				// if its part of the current batch, just increase numVertices
+				glyphBatches.back().verticesNumber += 4;
 			}
-			vertices[cv++] = glyphs_map[cg]->topLeft;
-			vertices[cv++] = glyphs_map[cg]->topRight;
-			vertices[cv++] = glyphs_map[cg]->bottomLeft;
+
+			indices[ci++] = cv;
+			indices[ci++] = cv + 1;
+			indices[ci++] = cv + 3;
+			indices[ci++] = cv + 1;
+			indices[ci++] = cv + 2;
+			indices[ci++] = cv + 3;
+
 			vertices[cv++] = glyphs_map[cg]->topRight;
 			vertices[cv++] = glyphs_map[cg]->bottomRight;
 			vertices[cv++] = glyphs_map[cg]->bottomLeft;
-			offset += 6;
+			vertices[cv++] = glyphs_map[cg]->topLeft;
+			offset += 4;
 		}
 
-		// Bind our VBO
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quadIBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, (ci + 1) * sizeof(GLuint), indices.data(), GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
 		glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-
-		// Orphan the buffer (for speed)
-		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), nullptr, GL_DYNAMIC_DRAW);
-		// Upload the data
-		glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(Vertex), vertices.data());
-
-		// Unbind the VBO
+		glBufferData(GL_ARRAY_BUFFER, (cv + 1) * sizeof(Vertex), nullptr, GL_DYNAMIC_DRAW);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, (cv + 1) * sizeof(Vertex), vertices.data());
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	}
