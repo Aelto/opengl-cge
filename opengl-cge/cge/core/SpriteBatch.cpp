@@ -5,8 +5,6 @@
 #include <algorithm>
 #include <iostream>
 
-// TODO : https://stackoverflow.com/questions/27676966/spritebatch-only-drawing-first-sprite
-
 namespace cge {
 
 	/// Glyph
