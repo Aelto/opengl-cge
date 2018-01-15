@@ -112,12 +112,9 @@ namespace cge {
 
 	void SpriteBatch::createVAO() {
 
-		// We bind our VAO
-		// Everything we do now will be stored into the VAO
 		glBindVertexArray(quadVAO);
 
 		glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-		// tell opengl what attribute arrays we need
 		glEnableVertexAttribArray(0);
 
 		// this is the position attribute pointer
@@ -127,13 +124,9 @@ namespace cge {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quadIBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 0, nullptr, GL_STATIC_DRAW);
 
-		// Unbind the VAO
 		glBindVertexArray(0);
 
-		// We unbind the VBO outside of the VAO
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	}
 

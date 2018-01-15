@@ -28,13 +28,9 @@ GAME::Assets_uv assets_uv;
 #include "game/classes/entities/Entity.h"
 #include "game/utils/ShaderStorage.h"
 #include "game/utils/TextureStorage.h"
+#include "game/classes/world/Room.h"
 
 inline void drawCursor(cge::app & app, cge::Camera & camera, cge::SpriteAnimation & cursor, cge::SpriteBatch & batch);
-
-/**
- * TODO: faire une classe Room, qui permettrait de render une room complète avec tout ses murs,
- * le sol, les portes
- */
 
 int main(int argc, char *argv[]) {
 	cge::app app(1280, 900);
@@ -63,19 +59,6 @@ int main(int argc, char *argv[]) {
 
 	camera.followedPosition = &player.position;
 
-	std::vector<cge::SpriteAnimation> floors;
-	for (auto x = 0; x < 10; x += 1)
-		for (auto y = 0; y < 10; y += 1) {
-			floors.push_back(
-				cge::SpriteAnimation(
-					glm::vec2(x * constants.tile_size, y * constants.tile_size),
-					glm::vec2(constants.tile_size, constants.tile_size),
-					&textureStorage.assetsPNG,
-					assets_uv.FLOORS[5]
-				)
-			);
-		}
-
 	std::vector<GAME::Entity> walls;
 	walls.push_back(GAME::Entity(
 		glm::vec2(app.width / 2, app.height / 2),
@@ -93,6 +76,10 @@ int main(int argc, char *argv[]) {
 
 	cge::Hitbox wallBox(glm::vec2(1.0f, 0.3f), glm::vec2(0.5f, 0.2f));
 	cge::Hitbox playerBox(glm::vec2(0.5f, 0.5f), glm::vec2(0.5f, 0.5f));
+
+	auto room = GAME::Room(16, 16, 0, 0);
+	room.generate(constants, textureStorage, assets_uv, wallBox);
+
 	for (auto & wall : walls) wall.addBox(&wallBox);
 	player.addBox(&playerBox);
 	creature.addBox(&playerBox);
@@ -126,16 +113,21 @@ int main(int argc, char *argv[]) {
 		player.mainBehavior(delta, walls);
 		creature.mainBehavior(delta, walls);
 
+		room.intersects(delta, player);
+		room.intersects(delta, creature);
+
+		player.applyFriction(0.9f);
+		creature.applyFriction(0.9f);
+
 		batch.begin();
 
-		for (auto & floor : floors)
-			floor.batchDraw(batch);
+		room.render(batch);
 
 		for (auto & wall : walls) 
 			wall.batchDraw(batch);
 
 		creature.batchDraw(batch);
-		// player.batchDraw(batch);
+		player.batchDraw(batch);
 
 		creature.interactWithPlayer(player);
 		drawCursor(app, camera, cursor, batch);
@@ -150,7 +142,7 @@ int main(int argc, char *argv[]) {
 
 		spriteRenderer.begin();
 
-		player.draw(spriteRenderer);
+		// player.draw(spriteRenderer);
 
 
 		shaderStorage.spriterendererShader.Use();

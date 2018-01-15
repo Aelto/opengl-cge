@@ -39,7 +39,6 @@ cge::Quad::Quad(GLfloat x, GLfloat y,
 cge::SpriteRenderer::SpriteRenderer() {
 
 	glGenVertexArrays(1, &quadVAO);
-
 	glGenBuffers(1, &quadVBO);
 
 	// VAO creation
@@ -47,7 +46,6 @@ cge::SpriteRenderer::SpriteRenderer() {
 	glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
 
 	// it's a vector4 ( X_position, Y_position, X_uv_coordinates, Y_uv_coordinates )
-	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
 
 	glBindVertexArray(0);
@@ -81,15 +79,8 @@ void cge::SpriteRenderer::end() {
 		return;
 	int currentVertex = 0;
 
-	vertices[currentVertex++] = quads[0].topLeft;
-	vertices[currentVertex++] = quads[0].topRight;
-	vertices[currentVertex++] = quads[0].bottomLeft;
-	vertices[currentVertex++] = quads[0].topRight;
-	vertices[currentVertex++] = quads[0].bottomRight;
-	vertices[currentVertex++] = quads[0].bottomLeft;
-
 	auto quad_size = quads.size();
-	for (size_t currentQuad = 1; currentQuad < quad_size; currentQuad++) {
+	for (size_t currentQuad = 0; currentQuad < quad_size; currentQuad++) {
 
 		vertices[currentVertex++] = quads[currentQuad].topLeft;
 		vertices[currentVertex++] = quads[currentQuad].topRight;
@@ -114,14 +105,13 @@ void cge::SpriteRenderer::render(Shader & shader) {
 	if (quads.empty())
 		return;
 
-	glActiveTexture(GL_TEXTURE0);
 	glBindVertexArray(quadVAO);
 	GLuint lastTexture = GL_TEXTURE0;
 
 	auto quad_size = quads.size();
 	for (size_t currentQuad = 0; currentQuad < quad_size; currentQuad++) {
 		glm::mat4 model;
-		model = glm::translate(model, glm::vec3(quads[currentQuad].topLeft.x, quads[currentQuad].topLeft.y, 0.0f));
+		model = glm::translate(model, glm::vec3(150, 150, 0.0f));
 
 		model = glm::translate(model, glm::vec3(0.5f * quads[currentQuad].width, 0.5f * quads[currentQuad].height, 0.0f));
 		model = glm::rotate(model, quads[currentQuad].rotate, glm::vec3(0.0f, 0.0f, 1.0f));
@@ -130,12 +120,13 @@ void cge::SpriteRenderer::render(Shader & shader) {
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 
 		shader.SetMatrix4("model", model);
+		shader.SetVector3f("color", glm::vec3(1, 1, 1));
 
 		if (quads[currentQuad].textureID != lastTexture) {
 			glBindTexture(GL_TEXTURE_2D, quads[currentQuad].textureID);
 			lastTexture = quads[currentQuad].textureID;
 		}
-		
+
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 	}
 

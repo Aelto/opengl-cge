@@ -10,7 +10,7 @@ namespace GAME {
 	class Constants {
 	public:
 		Constants() {
-			hero_speed = 60.0f;
+			hero_speed = 1.0f;
 			tile_size = 128;
 			pointer_size = 64;
 		};

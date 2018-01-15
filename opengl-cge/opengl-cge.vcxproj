@@ -36,6 +36,7 @@
     <ClCompile Include="game\classes\entities\Entity.cpp" />
     <ClCompile Include="game\classes\entities\Creature.cpp" />
     <ClCompile Include="game\classes\entities\Player.cpp" />
+    <ClCompile Include="game\classes\world\Room.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="cge\game\SpriteSheet.cpp" />
   </ItemGroup>
@@ -58,6 +59,7 @@
     <ClInclude Include="cge\game\SpriteSheet.h" />
     <ClInclude Include="game\classes\entities\Entity.h" />
     <ClInclude Include="game\classes\entities\Player.h" />
+    <ClInclude Include="game\classes\world\Room.h" />
     <ClInclude Include="game\utils\assets-uv.h" />
     <ClInclude Include="game\utils\constants.h" />
     <ClInclude Include="game\classes\entities\Creature.h" />
