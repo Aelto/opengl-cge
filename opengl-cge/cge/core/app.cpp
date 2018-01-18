@@ -1,10 +1,8 @@
 #include "app.h"
 
-#include <iostream>
-
 namespace cge {
 
-	app::app(GLuint _width, GLuint _height)
+	App::App(GLuint _width, GLuint _height)
 		: width(_width), height(_height) {
 
 		window = nullptr;
@@ -12,14 +10,14 @@ namespace cge {
 	}
 
 
-	app::~app() {
-		app::currentApp = nullptr;
+	App::~App() {
+		App::currentApp = nullptr;
 
 		glfwTerminate();
 	}
 
 
-	void app::open(int GL_major, int GL_minor, const char * name) {
+	void App::open(int GL_major, int GL_minor, const char * name) {
 
 		glfwInit();
 
@@ -32,9 +30,9 @@ namespace cge {
 		window = glfwCreateWindow(width, height, name, nullptr, nullptr);
 		glfwMakeContextCurrent(window);
 
-		app::currentApp = this;
-		glfwSetKeyCallback(window, app::keyCallback_dispatch);
-		glfwSetCursorPosCallback(window, app::mouseCallback_dispatch);
+		App::currentApp = this;
+		glfwSetKeyCallback(window, App::keyCallback_dispatch);
+		glfwSetCursorPosCallback(window, App::mouseCallback_dispatch);
 
 		glewExperimental = GL_TRUE;
 		glewInit();
@@ -48,23 +46,23 @@ namespace cge {
 
 	}
 
-	app * app::currentApp;
+	App * App::currentApp;
 
-	void app::keyCallback_dispatch(GLFWwindow* window, int key, int scancode, int action, int mode) {
+	void App::keyCallback_dispatch(GLFWwindow* window, int key, int scancode, int action, int mode) {
 
-		if (app::currentApp)
-			app::currentApp->keyCallback(window, key, scancode, action, mode);
+		if (App::currentApp)
+			App::currentApp->keyCallback(window, key, scancode, action, mode);
 
 	}
 
-	void app::mouseCallback_dispatch(GLFWwindow * window, double xpos, double ypos) {
+	void App::mouseCallback_dispatch(GLFWwindow * window, double xpos, double ypos) {
 	
-		if (app::currentApp)
-			app::currentApp->mouseCallback(window, xpos, ypos);
+		if (App::currentApp)
+			App::currentApp->mouseCallback(window, xpos, ypos);
 
 	}
 
-	void app::keyCallback(GLFWwindow * window, int key, int scancode, int action, int mode) {
+	void App::keyCallback(GLFWwindow * window, int key, int scancode, int action, int mode) {
 
 		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 			glfwSetWindowShouldClose(window, GL_TRUE);
@@ -78,18 +76,18 @@ namespace cge {
 
 	}
 
-	void app::mouseCallback(GLFWwindow * window, double xpos, double ypos) {
+	void App::mouseCallback(GLFWwindow * window, double xpos, double ypos) {
 		mousePosition.x = xpos;
 		mousePosition.y = ypos;
 	}
 
-	int app::shouldClose() {
+	int App::shouldClose() {
 
 		return glfwWindowShouldClose(window);
 
 	}
 
-	int app::startLoop() {
+	int App::startLoop() {
 
 		glfwPollEvents();
 
@@ -100,7 +98,7 @@ namespace cge {
 
 	}
 
-	void app::endLoop() {
+	void App::endLoop() {
 
 		glfwSwapBuffers(window);
 

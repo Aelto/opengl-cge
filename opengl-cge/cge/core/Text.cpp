@@ -3,12 +3,12 @@
 #include "ResourceManager.h"
 
 cge::TextManager::TextManager() {
-	shader = cge::ResourceManager::LoadShader("shaders/text.vs", "shaders/text.frag", nullptr, "cge_textShader");
-	shader.Use();
+	shader = cge::ResourceManager::loadShader("shaders/text.vs", "shaders/text.frag", nullptr, "cge_textShader");
+	shader.use();
 }
 
 bool cge::TextManager::init(GLuint width, GLuint height) {
-	shader.Use();
+	shader.use();
 	glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), 0.0f, static_cast<GLfloat>(height));
 	glUniformMatrix4fv(glGetUniformLocation(shader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
@@ -85,7 +85,7 @@ bool cge::TextManager::init(GLuint width, GLuint height) {
 
 void cge::TextManager::renderText(std::string & text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 & color) {
 	// Activate corresponding render state	
-	shader.Use();
+	shader.use();
 	glUniform3f(glGetUniformLocation(shader.ID, "textColor"), color.x, color.y, color.z);
 	glActiveTexture(GL_TEXTURE0);
 	glBindVertexArray(VAO);

@@ -119,8 +119,8 @@ void cge::SpriteRenderer::render(Shader & shader) {
 
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 
-		shader.SetMatrix4("model", model);
-		shader.SetVector3f("color", glm::vec3(1, 1, 1));
+		shader.setMatrix4("model", model);
+		shader.setVector3f("color", glm::vec3(1, 1, 1));
 
 		if (quads[currentQuad].textureID != lastTexture) {
 			glBindTexture(GL_TEXTURE_2D, quads[currentQuad].textureID);
