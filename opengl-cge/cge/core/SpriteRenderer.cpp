@@ -1,32 +1,34 @@
 #include "SpriteRenderer.h"
 
-cge::Quad::Quad(GLfloat x, GLfloat y, 
+cge::Quad::Quad(GLfloat x, GLfloat y,
 	GLfloat _width, GLfloat _height, GLuint _textureID,
 	GLfloat topLeftUVx, GLfloat topRightUVx,
 	GLfloat bottomRightUVx, GLfloat bottomLeftUVx,
 	GLfloat topLeftUVy, GLfloat topRightUVy,
-	GLfloat bottomRightUVy, GLfloat bottomLeftUVy, GLfloat _rotate) {
+	GLfloat bottomRightUVy, GLfloat bottomLeftUVy, GLfloat _rotate)
+	: x(x), y(y) {
 
+	// TODO: maybe optimising this to only use width and height once instead of 3 times.
 	width = _width;
 	height = _height;
 
-	topLeft.x = x;
-	topLeft.y = y;
+	topLeft.x = 0;
+	topLeft.y = 0;
 	topLeft.uvX = topLeftUVx;
 	topLeft.uvY = topLeftUVy;
 
-	topRight.x = x + width;
-	topRight.y = y;
+	topRight.x = width;
+	topRight.y = 0;
 	topRight.uvX = topRightUVx;
 	topRight.uvY = topRightUVy;
 
-	bottomLeft.x = x;
-	bottomLeft.y = y + height;
+	bottomLeft.x = 0;
+	bottomLeft.y = height;
 	bottomLeft.uvX = bottomLeftUVx;
 	bottomLeft.uvY = bottomLeftUVy;
 
-	bottomRight.x = x + width;
-	bottomRight.y = y + height;
+	bottomRight.x = width;
+	bottomRight.y = height;
 	bottomRight.uvX = bottomRightUVx;
 	bottomRight.uvY = bottomRightUVy;
 
@@ -120,7 +122,7 @@ void cge::SpriteRenderer::end() {
 
 }
 
-void cge::SpriteRenderer::render(Shader & shader) {
+void cge::SpriteRenderer::render(Shader & shader, Camera & camera) {
 
 	if (quads.empty())
 		return;
@@ -128,26 +130,25 @@ void cge::SpriteRenderer::render(Shader & shader) {
 	glBindVertexArray(quadVAO);
 	GLuint lastTexture = GL_TEXTURE0;
 
-	auto quad_size = quads.size();
+	size_t quad_size = quads.size();
 	for (size_t currentQuad = 0; currentQuad < quad_size; currentQuad++) {
 		glm::mat4 model;
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-
+		
+		model = glm::translate(model, glm::vec3(quads[currentQuad].x, quads[currentQuad].y, 0.0f));
 		model = glm::translate(model, glm::vec3(0.5f * quads[currentQuad].width, 0.5f * quads[currentQuad].height, 0.0f));
 		model = glm::rotate(model, quads[currentQuad].rotate, glm::vec3(0.0f, 0.0f, 1.0f));
 		model = glm::translate(model, glm::vec3(-0.5f * quads[currentQuad].width, -0.5f * quads[currentQuad].height, 0.0f));
-
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 
 		shader.setMatrix4("model", model);
-		shader.setVector3f("color", glm::vec3(1.0f, 1.0f, 1.0f));
+		// shader.setVector3f("color", glm::vec3(1.0f, 1.0f, 1.0f));
 
 		if (quads[currentQuad].textureID != lastTexture) {
 			glBindTexture(GL_TEXTURE_2D, quads[currentQuad].textureID);
 			lastTexture = quads[currentQuad].textureID;
 		}
 
-		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 0);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, currentQuad * 6);
 		// glDrawArrays(GL_TRIANGLES, 0, 6);
 	}
 

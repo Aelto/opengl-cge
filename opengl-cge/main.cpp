@@ -138,17 +138,15 @@ int main(int argc, char *argv[]) {
 		batch.render();
 
 
-
-
 		spriteRenderer.begin();
 
-		// player.draw(spriteRenderer);
+		player.draw(spriteRenderer);
 
 
 		shaderStorage.spriterendererShader.use();
 		shaderStorage.spriterendererShader.setMatrix4("view", camera.view);
 		spriteRenderer.end();
-		spriteRenderer.render(shaderStorage.spriterendererShader);
+		spriteRenderer.render(shaderStorage.spriterendererShader, camera);
 
 		// player.time(delta * 1000.0f);
 

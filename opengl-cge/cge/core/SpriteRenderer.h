@@ -2,6 +2,7 @@
 
 #include "Shader.h"
 #include "SpriteBatch.h"
+#include "camera.h"
 
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
@@ -30,6 +31,8 @@ namespace cge {
 		GLfloat rotate;
 		GLfloat width;
 		GLfloat height;
+		GLfloat x;
+		GLfloat y;
 	};
 
 	class SpriteRenderer {
@@ -44,7 +47,7 @@ namespace cge {
 
 		void end();
 
-		void render(Shader & shader);
+		void render(Shader & shader, Camera & camera);
 
 		std::vector<Quad> quads;
 
