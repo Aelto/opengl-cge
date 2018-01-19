@@ -52,6 +52,8 @@ namespace cge {
 
 		GLuint quadVBO;
 
+		GLuint quadIBO;
+
 	};
 
 }
