@@ -1,4 +1,10 @@
 ﻿
+#define GLEW_STATIC
+#include <GL\glew.h>
+#include <GLFW\glfw3.h>
+#include <glm\glm.hpp>
+#include "glm\gtc\matrix_transform.hpp"
+
 #include "cge\cge.h"
 
 #include <vector>
@@ -11,12 +17,6 @@
 #include <chrono>
 #include <thread>
 
-#define GLEW_STATIC
-#include <GL\glew.h>
-#include <GLFW\glfw3.h>
-#include <glm\glm.hpp>
-#include "glm\gtc\matrix_transform.hpp"
-
 
 #include "game/utils/assets-uv.h"
 #include "game/utils/constants.h"
@@ -28,16 +28,12 @@ GAME::Assets_uv assets_uv;
 #include "game/classes/entities/Entity.h"
 #include "game/utils/ShaderStorage.h"
 #include "game/utils/TextureStorage.h"
+#include "game/classes/world/Room.h"
 
-inline void drawCursor(cge::app & app, cge::Camera & camera, cge::SpriteAnimation & cursor, cge::SpriteBatch & batch);
-
-/**
- * TODO: faire une classe Room, qui permettrait de render une room complète avec tout ses murs,
- * le sol, les portes
- */
+inline void drawCursor(cge::App & app, cge::Camera & camera, cge::SpriteAnimation & cursor, cge::SpriteBatch & batch);
 
 int main(int argc, char *argv[]) {
-	cge::app app(1280, 900);
+	cge::App app(1280, 900);
 	app.open(4, 3, "Opengl engine");
 
 	cge::Camera camera(app.width, app.height);
@@ -63,19 +59,6 @@ int main(int argc, char *argv[]) {
 
 	camera.followedPosition = &player.position;
 
-	std::vector<cge::SpriteAnimation> floors;
-	for (auto x = 0; x < 10; x += 1)
-		for (auto y = 0; y < 10; y += 1) {
-			floors.push_back(
-				cge::SpriteAnimation(
-					glm::vec2(x * constants.tile_size, y * constants.tile_size),
-					glm::vec2(constants.tile_size, constants.tile_size),
-					&textureStorage.assetsPNG,
-					assets_uv.FLOORS[5]
-				)
-			);
-		}
-
 	std::vector<GAME::Entity> walls;
 	walls.push_back(GAME::Entity(
 		glm::vec2(app.width / 2, app.height / 2),
@@ -93,6 +76,10 @@ int main(int argc, char *argv[]) {
 
 	cge::Hitbox wallBox(glm::vec2(1.0f, 0.3f), glm::vec2(0.5f, 0.2f));
 	cge::Hitbox playerBox(glm::vec2(0.5f, 0.5f), glm::vec2(0.5f, 0.5f));
+
+	auto room = GAME::Room(16, 16, 0, 0);
+	room.generate(constants, textureStorage, assets_uv, wallBox);
+
 	for (auto & wall : walls) wall.addBox(&wallBox);
 	player.addBox(&playerBox);
 	creature.addBox(&playerBox);
@@ -126,26 +113,29 @@ int main(int argc, char *argv[]) {
 		player.mainBehavior(delta, walls);
 		creature.mainBehavior(delta, walls);
 
+		room.intersects(delta, player);
+		room.intersects(delta, creature);
+
+		player.applyFriction(0.9f);
+		creature.applyFriction(0.9f);
+
 		batch.begin();
 
-		for (auto & floor : floors)
-			floor.batchDraw(batch);
+		room.render(batch);
 
 		for (auto & wall : walls) 
 			wall.batchDraw(batch);
 
 		creature.batchDraw(batch);
-		// player.batchDraw(batch);
+		player.batchDraw(batch);
 
 		creature.interactWithPlayer(player);
 		drawCursor(app, camera, cursor, batch);
 		
-		shaderStorage.spritebatchShader.Use();
-		shaderStorage.spritebatchShader.SetMatrix4("view", camera.view);
+		shaderStorage.spritebatchShader.use();
+		shaderStorage.spritebatchShader.setMatrix4("view", camera.view);
 		batch.end();
 		batch.render();
-
-
 
 
 		spriteRenderer.begin();
@@ -153,10 +143,10 @@ int main(int argc, char *argv[]) {
 		player.draw(spriteRenderer);
 
 
-		shaderStorage.spriterendererShader.Use();
-		shaderStorage.spriterendererShader.SetMatrix4("view", camera.view);
+		shaderStorage.spriterendererShader.use();
+		shaderStorage.spriterendererShader.setMatrix4("view", camera.view);
 		spriteRenderer.end();
-		spriteRenderer.render(shaderStorage.spriterendererShader);
+		spriteRenderer.render(shaderStorage.spriterendererShader, camera);
 
 		// player.time(delta * 1000.0f);
 
@@ -168,7 +158,7 @@ int main(int argc, char *argv[]) {
 
 }
 
-inline void drawCursor(cge::app & app, cge::Camera & camera, cge::SpriteAnimation & cursor, cge::SpriteBatch & batch) {
+inline void drawCursor(cge::App & app, cge::Camera & camera, cge::SpriteAnimation & cursor, cge::SpriteBatch & batch) {
 	cursor.position.x = app.mousePosition.x + camera.Position.x;
 	cursor.position.y = app.height - app.mousePosition.y + camera.Position.y;
 	cursor.batchDraw(batch);

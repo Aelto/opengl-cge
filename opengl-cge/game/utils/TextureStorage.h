@@ -12,8 +12,8 @@ namespace GAME {
 	class TextureStorage {
 	public:
 		TextureStorage() {
-			assetsPNG = cge::ResourceManager::LoadTexture("assets/assets.png", GL_TRUE, "assets");
-			pointerPNG = cge::ResourceManager::LoadTexture("assets/pointer.png", GL_TRUE, "pointer");
+			assetsPNG = cge::ResourceManager::loadTexture("assets/assets.png", GL_TRUE, "assets");
+			pointerPNG = cge::ResourceManager::loadTexture("assets/pointer.png", GL_TRUE, "pointer");
 		};
 
 		cge::Texture2D assetsPNG;

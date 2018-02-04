@@ -112,12 +112,9 @@ namespace cge {
 
 	void SpriteBatch::createVAO() {
 
-		// We bind our VAO
-		// Everything we do now will be stored into the VAO
 		glBindVertexArray(quadVAO);
 
 		glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-		// tell opengl what attribute arrays we need
 		glEnableVertexAttribArray(0);
 
 		// this is the position attribute pointer
@@ -127,13 +124,9 @@ namespace cge {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quadIBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 0, nullptr, GL_STATIC_DRAW);
 
-		// Unbind the VAO
 		glBindVertexArray(0);
 
-		// We unbind the VBO outside of the VAO
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	}
 
@@ -141,10 +134,10 @@ namespace cge {
 
 	void SpriteBatch::linkShaders(glm::highp_mat4 projection, glm::mat4 view, glm::vec3 color) {
 
-		shader = ResourceManager::LoadShader("shaders/cge/SpriteBatchShader.vs", "shaders/cge/SpriteBatchShader.frag", nullptr, "SpriteBatchShader_default");
-		shader.SetMatrix4("projection", projection);
-		shader.SetMatrix4("view", view);
-		shader.SetVector3f("spriteColor", color);
+		shader = ResourceManager::loadShader("shaders/cge/SpriteBatchShader.vs", "shaders/cge/SpriteBatchShader.frag", nullptr, "SpriteBatchShader_default");
+		shader.setMatrix4("projection", projection);
+		shader.setMatrix4("view", view);
+		shader.setVector3f("spriteColor", color);
 
 	}
 

@@ -6,40 +6,40 @@ namespace GAME {
 
 	class ShaderStorage {
 	public:
-		ShaderStorage(cge::app & app, cge::Camera & camera)
+		ShaderStorage(cge::App & app, cge::Camera & camera)
 			: spritebatchShader(), spriterendererShader() {
 
-			spritebatchShader = cge::ResourceManager::LoadShader(
+			spritebatchShader = cge::ResourceManager::loadShader(
 				"shaders/spritebatch.vs",
 				"shaders/spritebatch.frag",
 				nullptr, "spritebatch");
-			spritebatchShader.Use();
+			spritebatchShader.use();
 
-			spritebatchShader.SetMatrix4(
+			spritebatchShader.setMatrix4(
 				"projection",
 				glm::ortho(0.0f, static_cast<GLfloat>(app.width),
 					0.0f,
 					static_cast<GLfloat>(app.height)));
 
-			spritebatchShader.SetMatrix4("view", camera.view);
-			spritebatchShader.SetVector3f("spriteColor", glm::vec3(1.0f, 1.0f, 1.0f));
+			spritebatchShader.setMatrix4("view", camera.view);
+			spritebatchShader.setVector3f("spriteColor", glm::vec3(1.0f, 1.0f, 1.0f));
 
 
 
-			spriterendererShader = cge::ResourceManager::LoadShader(
+			spriterendererShader = cge::ResourceManager::loadShader(
 				"shaders/sprite.vs",
 				"shaders/sprite.frag",
 				nullptr, "sprite");
-			spriterendererShader.Use();
+			spriterendererShader.use();
 
-			spriterendererShader.SetMatrix4(
+			spriterendererShader.setMatrix4(
 				"projection",
 				glm::ortho(0.0f, static_cast<GLfloat>(app.width),
 					0.0f,
 					static_cast<GLfloat>(app.height)));
 
-			spriterendererShader.SetMatrix4("view", camera.view);
-			spriterendererShader.SetVector3f("spriteColor", glm::vec3(1.0f, 1.0f, 1.0f));
+			spriterendererShader.setMatrix4("view", camera.view);
+			spriterendererShader.setVector3f("spriteColor", glm::vec3(1.0f, 1.0f, 1.0f));
 
 		};
 

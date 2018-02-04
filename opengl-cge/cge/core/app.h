@@ -8,10 +8,10 @@
 #include <string>
 
 namespace cge {
-	class app {
+	class App {
 	public:
-		app(GLuint _width, GLuint _height);
-		~app();
+		App(GLuint _width, GLuint _height);
+		~App();
 
 		/// props
 		GLuint width;
@@ -22,7 +22,7 @@ namespace cge {
 
 		GLFWwindow * window;
 
-		static app * currentApp;
+		static App * currentApp;
 		static void keyCallback_dispatch(GLFWwindow* window, int key, int scancode, int action, int mode);
 		static void mouseCallback_dispatch(GLFWwindow* window, double xpos, double ypos);
 		void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);

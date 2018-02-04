@@ -20,14 +20,6 @@ namespace GAME {
 		applyAcceleration(delta);
 		applyVelocity(delta);
 
-		for (auto & entity : collisionEntities)
-			if (intersects(entity)) {
-				position.x -= velocity.x;
-				position.y -= velocity.y;
-			}
-
-		applyFriction(0.9f);
-
 	}
 
 	void Entity::applyAcceleration(const GLfloat delta) {
