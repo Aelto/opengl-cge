@@ -105,4 +105,6 @@ namespace cge {
 
 	};
 
+  App * App::currentApp;
+
 };

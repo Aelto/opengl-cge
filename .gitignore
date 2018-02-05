@@ -3,3 +3,4 @@
 /dist/*.obj
 /dist/*.lib
 /.old
+dist/main.exe

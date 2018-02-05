@@ -11,15 +11,15 @@ const cge_config = {
 
   libraries: [
     path.resolve(libDirectory, `glfw3.lib`),
-    path.resolve(libDirectory, `freetype28.lib`),
+    path.resolve(libDirectory, `freetype281.lib`),
 
-    `opengl32.lib`
-  ],
-
-  staticLibraries: [
+    `opengl32.lib`,
     path.resolve(libDirectory, `glew32s.lib`),
     path.resolve(libDirectory, `SOIL.lib`)
   ],
+
+  // staticLibraries: [
+  // ],
 
   macros: [ 'GLEW_STATIC' ],
   args: ['/MD', '/EHcs'],
@@ -31,13 +31,31 @@ const game_config = {
   includeDirectories: [
     path.resolve(__dirname, '../deps/includes/'),
     path.resolve(__dirname, `../src`)
-  ]
+  ],
+
+  libraries: [
+    path.resolve(libDirectory, `glfw3.lib`),
+    path.resolve(libDirectory, `freetype281.lib`),
+    path.resolve(libDirectory, `glew32s.lib`),
+    path.resolve(libDirectory, `SOIL.lib`),
+
+    'gdi32.lib', 'opengl32.lib', 'kernel32.lib', 'user32.lib', 'shell32.lib'
+  ],
+
+  macros: [ 'GLEW_STATIC' ],
+  args: ['/MD', '/EHcs'],
 }
 
 module.exports = cuff => {
-  const option = cuff.buildConfig(config)
-  const output = cuff.compilers.clDefault.generate(option)
+  const cge_option = cuff.buildConfig(cge_config)
+  const output = cuff.compilers.clLib.generate(cge_option)
 
   cuff.commands.build(output)
-  .catch(err => {})
+  .then(() => {
+    const game_option = cuff.buildConfig(game_config)
+    const game_output = cuff.compilers.clDefault.generate(game_option)
+
+    return cuff.commands.build(game_output)
+  })
+  .catch(() => {})
 }
