@@ -15,3 +15,4 @@
 #include "text.h"
 #include "resource-manager.h"
 #include "spritebatch.h"
+#include "sprite-renderer.h"
