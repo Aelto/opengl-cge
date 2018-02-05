@@ -13,3 +13,5 @@
 #include "texture.h"
 #include "text-manager.h"
 #include "text.h"
+#include "resource-manager.h"
+#include "spritebatch.h"
