@@ -1,6 +1,5 @@
 #pragma once
 
-#define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -17,7 +16,7 @@ namespace cge {
 		glm::vec2 mousePosition;
     GLFWwindow * window;
 
-		static App * currentApp;
+		inline static App * currentApp = nullptr;
 
 		App(GLuint _width, GLuint _height)
       : width(_width), height(_height) {
@@ -104,7 +103,5 @@ namespace cge {
     }
 
 	};
-
-  App * App::currentApp;
 
 };

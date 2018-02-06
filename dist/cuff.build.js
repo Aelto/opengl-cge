@@ -19,7 +19,7 @@ const cge_config = {
   ],
 
   macros: [ 'GLEW_STATIC' ],
-  args: ['/MD', '/EHcs'],
+  args: ['/MD', '/EHcs', '/std:c++17'],
 }
 
 const game_config = {
@@ -40,19 +40,19 @@ const game_config = {
   ],
 
   macros: [ 'GLEW_STATIC' ],
-  args: ['/MD', '/EHcs'],
+  args: ['/MD', '/EHcs', '/std:c++17'],
 }
 
 module.exports = cuff => {
-  const cge_option = cuff.buildConfig(cge_config)
-  const output = cuff.compilers.clLib.generate(cge_option)
+  // const cge_option = cuff.buildConfig(cge_config)
+  // const output = cuff.compilers.clLib.generate(cge_option)
 
-  cuff.commands.build(output)
-  .then(() => {
+  // cuff.commands.build(output)
+  // .then(() => {
     const game_option = cuff.buildConfig(game_config)
     const game_output = cuff.compilers.clDefault.generate(game_option)
 
     return cuff.commands.build(game_output)
-  })
+  // })
   .catch(() => {})
 }

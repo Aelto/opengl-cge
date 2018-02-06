@@ -1,8 +1,0 @@
-{
-  "files.associations": {
-    "*.ixx": "cpp",
-    "iostream": "cpp",
-    "xiosbase": "cpp",
-    "xlocale": "cpp"
-  }
-}

@@ -8,10 +8,10 @@
 #include <fstream>
 
 
-#include <GL\glew.h>
-#include <GLFW\glfw3.h>
-#include <glm\glm.hpp>
-#include "glm\gtc\matrix_transform.hpp"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <SOIL/SOIL.h>
 
 #include "Texture.h"
@@ -26,7 +26,7 @@ namespace cge {
 		/**
 		 * Resource storage
 		 */
-		static std::map<std::string, Shader>    shaders;
+		static std::map<std::string, Shader> shaders;
 		static std::map<std::string, Texture2D> textures;
 
 		/**
