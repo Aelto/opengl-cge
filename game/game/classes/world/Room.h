@@ -4,9 +4,8 @@
 
 #include <glm/glm.hpp>
 
+#include "cge.h"
 #include "../entities/Entity.h"
-#include "../../../../src/core/Shader.h"
-#include "../../../../src/core/SpriteBatch.h"
 #include "../../utils//TextureStorage.h"
 #include "../../utils/constants.h"
 #include "../../utils/assets-uv.h"

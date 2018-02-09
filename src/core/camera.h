@@ -7,6 +7,7 @@
 namespace cge {
 	class Camera {
 	public:
+		Camera() {};
 		Camera(GLuint width, GLuint height);
 		~Camera();
 

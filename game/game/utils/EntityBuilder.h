@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../src/cge.h"
+#include "cge.h"
 
 namespace GAME {
 

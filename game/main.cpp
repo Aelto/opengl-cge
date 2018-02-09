@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "../src/cge.h"
+#include "cge.h"
 
 #include <vector>
 #include <map>
@@ -23,13 +23,13 @@
 GAME::Constants constants;
 // GAME::Assets_uv assets_uv;
 
-#include "../src/core/AnimationsUV.h"
-#include "../src/core/ResourceManager.h"
+#include "cge.h"
 
 #include "game/classes/entities/Creature.h"
 #include "game/classes/entities/Entity.h"
 #include "game/utils/ShaderStorage.h"
 #include "game/utils/TextureStorage.h"
+#include "game/classes/game-instance.h"
 
 inline void drawCursor(cge::App & app, cge::Camera & camera, cge::SpriteAnimation & cursor, cge::SpriteBatch & batch);
 

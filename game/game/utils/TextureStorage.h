@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../src/cge.h"
+#include "cge.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>

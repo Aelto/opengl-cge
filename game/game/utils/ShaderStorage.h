@@ -1,11 +1,13 @@
 #pragma once
 
-#include "../../src/cge.h"
+#include "cge.h"
 
 namespace GAME {
 
 	class ShaderStorage {
 	public:
+		ShaderStorage() {}
+
 		ShaderStorage(cge::App & app, cge::Camera & camera)
 			: spritebatchShader(), spriterendererShader() {
 

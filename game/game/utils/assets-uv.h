@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../../../src/game/AnimationsUV.h"
-#include "../../../src/core/ResourceManager.h"
+#include "cge.h"
 
 namespace GAME {
 	class Assets_uv {

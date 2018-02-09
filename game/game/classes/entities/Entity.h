@@ -2,8 +2,7 @@
 
 #include <vector>
 
-#include "../../../../src/core/SpriteAnimation.h"
-#include "../../../../src/core/AnimationsUV.h"
+#include "cge.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
