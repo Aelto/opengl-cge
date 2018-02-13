@@ -16,7 +16,8 @@ namespace cge {
 		GLuint width;
 		GLuint height;
 
-		bool keys[1024];
+		static const int MAX_KEYS = 1024;
+		bool keys[MAX_KEYS];
 		glm::vec2 mousePosition;
 
 		GLFWwindow * window;

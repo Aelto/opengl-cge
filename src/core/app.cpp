@@ -1,9 +1,14 @@
 #include "app.h"
 
+#include <iostream>
+
 namespace cge {
 
 	App::App(GLuint _width, GLuint _height)
 		: width(_width), height(_height) {
+
+		for (auto i = 0; i < MAX_KEYS; i++)
+			keys[i] = false;
 
 		window = nullptr;
 
@@ -35,8 +40,15 @@ namespace cge {
 		glfwSetCursorPosCallback(window, App::mouseCallback_dispatch);
 
 		glewExperimental = GL_TRUE;
-		glewInit();
-		glGetError(); // get any errors
+		const GLenum glewState = glewInit();
+		if (glewState != GLEW_OK) {
+			std::cout << "Glew error" << glewGetErrorString(glewState) << std::endl;
+		}
+		
+		GLenum glErrors = glGetError(); // get any errors
+		if (glErrors != GL_NO_ERROR) {
+			std::cout << "OpenGL error" << std::endl;
+		}
 
 		// OpenGL configuration
 		glViewport(0, 0, width, height);
@@ -101,7 +113,7 @@ namespace cge {
 	void App::endLoop() {
 
 		glfwSwapBuffers(window);
-
+		
 		if (keys[GLFW_KEY_ESCAPE])
 			glfwSetWindowShouldClose(window, GL_TRUE);
 
