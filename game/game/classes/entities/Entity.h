@@ -15,7 +15,7 @@ namespace GAME {
 		Entity();
 		Entity(glm::vec2 pos, glm::vec2 _size, cge::Texture2D * _texture, cge::AnimationsUV _animationsUV, bool isSpriteInverted = false);
 
-		void mainBehavior(GLfloat delta, std::vector<Entity> & collisionEntities);
+		void mainBehavior(GLfloat delta);
 
 		bool isSpriteInverted;
 		float movespeed;

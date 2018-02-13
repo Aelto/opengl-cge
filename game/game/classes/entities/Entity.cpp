@@ -11,7 +11,7 @@ namespace GAME {
 		this->isSpriteInverted = isSpriteInverted;
 	}
 
-	void Entity::mainBehavior(GLfloat delta, std::vector<Entity> & collisionEntities) {
+	void Entity::mainBehavior(GLfloat delta) {
 
 		if (velocity.x < 0)
 			inverted = !isSpriteInverted;
