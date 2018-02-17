@@ -1,5 +1,8 @@
 #include "game-instance.h"
 
+#include "world/Room.h"
+#include "cge.h"
+
 namespace GAME {
 
   GameInstance::GameInstance(
@@ -54,6 +57,11 @@ namespace GAME {
   void GameInstance::play() {
     init();
 
+    cge::Hitbox wallBox(glm::vec2(1.0f, 0.3f), glm::vec2(0.5f, 0.2f));
+
+    GAME::Room room(16, 16, 0, 0);
+    room.generate(*constants, *textureStorage, *assets_uv, wallBox);
+
     while (!app->startLoop()) {
       delta = helper->getDelta();
       // helper->coutFramerate();
@@ -66,9 +74,10 @@ namespace GAME {
 
       player.mainBehavior(delta);
 
+      // batch rendering
       batchRenderer.begin();
 
-        drawCursor();
+        room.render(batchRenderer);
         player.batchDraw(batchRenderer);
 
       shaderStorage->spritebatchShader.use();
@@ -76,7 +85,7 @@ namespace GAME {
       batchRenderer.end();
       batchRenderer.render();
 
-
+      // sprites rendering
       spriteRenderer.begin();
 
       player.draw(spriteRenderer);
@@ -85,6 +94,14 @@ namespace GAME {
 		  shaderStorage->spriterendererShader.setMatrix4("view", camera->view);
       spriteRenderer.end();
       spriteRenderer.render(shaderStorage->spriterendererShader, *camera);
+
+      // UI rendering
+      batchRenderer.begin();
+        drawCursor();
+      shaderStorage->spritebatchShader.use();
+		  shaderStorage->spritebatchShader.setMatrix4("view", camera->view);
+      batchRenderer.end();
+      batchRenderer.render();
 
       app->endLoop();
     }
