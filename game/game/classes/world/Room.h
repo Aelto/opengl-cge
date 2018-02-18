@@ -9,7 +9,6 @@
 #include "../../utils//TextureStorage.h"
 #include "../../utils/constants.h"
 #include "../../utils/assets-uv.h"
-#include "../../classes/entities/Entity.h"
 
 namespace GAME {
 

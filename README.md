@@ -344,9 +344,9 @@ Sprite(glm::vec2 pos, glm::vec2 size, cge::Texture2D * _texture);
 
 ### Methods
 
-- **batchDraw** method
+- **drawBatch** method
   ```cpp
-  virtual void batchDraw(cge::SpriteBatch & spriteBatch);
+  virtual void drawBatch(cge::SpriteBatch & spriteBatch);
   ```
 
   Usage example
@@ -367,7 +367,7 @@ Sprite(glm::vec2 pos, glm::vec2 size, cge::Texture2D * _texture);
   while (!app.startLoop()) {
     batch.begin();
 
-    obstacle.batchDraw(batch);
+    obstacle.drawBatch(batch);
 
     batch.end();
     batch.rener();
@@ -456,9 +456,9 @@ SpriteAnimation(glm::vec2 pos, glm::vec2 _size, cge::Texture2D * _texture, Anima
 
 #### Methods
 
-- **batchDraw** method
+- **drawBatch** method
   ```cpp
-  virtual void batchDraw(cge::SpriteBatch & spriteBatch);
+  virtual void drawBatch(cge::SpriteBatch & spriteBatch);
   ```
 
 - **time** method

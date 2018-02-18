@@ -38,7 +38,7 @@ namespace cge {
 		 * Give to the suppplied SpriteBatch enough informations
 		 * to be able to create vertices for this object
 		 */
-		virtual void batchDraw(cge::SpriteBatch & spriteBatch);
+		virtual void drawBatch(cge::SpriteBatch & spriteBatch);
 
 		/**
 		 * Get a glm::vec2 with the distance relative to this->position

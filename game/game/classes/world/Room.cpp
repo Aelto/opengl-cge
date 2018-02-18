@@ -39,13 +39,13 @@ namespace GAME {
 	void Room::render(cge::SpriteBatch & batch) {
 
 		for (auto & entity : groundEntities)
-			entity.batchDraw(batch);
+			entity.drawBatch(batch);
 
 		for (auto & entity : wallEntities)
-			entity.batchDraw(batch);
+			entity.drawBatch(batch);
 
 		for (auto & entity : entities)
-			entity.batchDraw(batch);
+			entity.drawBatch(batch);
 
 	}
 

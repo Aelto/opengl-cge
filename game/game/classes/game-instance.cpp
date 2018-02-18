@@ -1,6 +1,6 @@
 #include "game-instance.h"
 
-#include "world/Room.h"
+#include "world/Chunk.h"
 #include "cge.h"
 
 namespace GAME {
@@ -29,7 +29,7 @@ namespace GAME {
   void GameInstance::drawCursor() {
     cursor.position.x = app->mousePosition.x + camera->Position.x;
     cursor.position.y = app->height - app->mousePosition.y + camera->Position.y - constants->pointer_size;
-    cursor.batchDraw(batchRenderer);
+    cursor.drawBatch(batchRenderer);
   }
 
   void GameInstance::init() {
@@ -59,8 +59,8 @@ namespace GAME {
 
     cge::Hitbox wallBox(glm::vec2(1.0f, 0.3f), glm::vec2(0.5f, 0.2f));
 
-    GAME::Room room(16, 16, 0, 0);
-    room.generate(*constants, *textureStorage, *assets_uv, wallBox);
+    GAME::Chunk chunk(0, 0);
+    chunk.generate(*constants, *textureStorage, *assets_uv, wallBox);
 
     while (!app->startLoop()) {
       delta = helper->getDelta();
@@ -77,8 +77,8 @@ namespace GAME {
       // batch rendering
       batchRenderer.begin();
 
-        room.render(batchRenderer);
-        player.batchDraw(batchRenderer);
+        chunk.renderLayer(0, batchRenderer);
+        player.drawBatch(batchRenderer);
 
       shaderStorage->spritebatchShader.use();
 		  shaderStorage->spritebatchShader.setMatrix4("view", camera->view);

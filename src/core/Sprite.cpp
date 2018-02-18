@@ -8,7 +8,7 @@ namespace cge {
 		: position(pos), size(size), texture(_texture), box(nullptr) {}
 
 
-	void Sprite::batchDraw(cge::SpriteBatch & spriteBatch) {
+	void Sprite::drawBatch(cge::SpriteBatch & spriteBatch) {
 
 		spriteBatch.draw(position.x, position.y, size.x, size.y, texture->ID);
 

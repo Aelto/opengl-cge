@@ -13,7 +13,7 @@ namespace cge {
 		box = nullptr;
 	}
 
-	void SpriteSheet::batchDraw(cge::SpriteBatch & spriteBatch) {
+	void SpriteSheet::drawBatch(cge::SpriteBatch & spriteBatch) {
 		spriteBatch.draw(position.x, position.y, size.x, size.y, texture->ID,
 			spriteSheetUV.getTopLeftXUv(), spriteSheetUV.getTopRightXUv(), spriteSheetUV.getBottomRightXUv(), spriteSheetUV.getBottomLeftXUv(),
 			spriteSheetUV.getTopLeftYUv(), spriteSheetUV.getTopRightYUv(), spriteSheetUV.getBottomRightYUv(), spriteSheetUV.getBottomLeftYUv());

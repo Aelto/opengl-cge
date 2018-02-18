@@ -12,7 +12,7 @@ namespace cge {
 		box = nullptr;
 	}
 
-	void SpriteAnimation::batchDraw(cge::SpriteBatch & spriteBatch) {
+	void SpriteAnimation::drawBatch(cge::SpriteBatch & spriteBatch) {
 		if (inverted) {
 			spriteBatch.draw(position.x, position.y, size.x, size.y, texture->ID,
 				animationsUV.getTopRightXUv(), animationsUV.getTopLeftXUv(), animationsUV.getBottomLeftXUv(), animationsUV.getBottomRightXUv(),
