@@ -62,6 +62,9 @@ namespace GAME {
     GAME::Chunk chunk(0, 0);
     chunk.generate(*constants, *textureStorage, *assets_uv, wallBox);
 
+    GAME::Chunk chunk_2(0, constants->tile_size * CHUNK_SIZE);
+    chunk_2.generate(*constants, *textureStorage, *assets_uv, wallBox);
+
     while (!app->startLoop()) {
       delta = helper->getDelta();
       // helper->coutFramerate();
@@ -78,6 +81,7 @@ namespace GAME {
       batchRenderer.begin();
 
         chunk.renderLayer(0, batchRenderer);
+        chunk_2.renderLayer(0, batchRenderer);
         player.drawBatch(batchRenderer);
 
       shaderStorage->spritebatchShader.use();

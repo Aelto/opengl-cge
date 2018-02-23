@@ -1,5 +1,5 @@
 #pragma once
-#include <array>
+#include <vector>
 
 #include <glm/glm.hpp>
 #include <cge.h>
@@ -18,14 +18,9 @@ namespace GAME {
     public:
     glm::vec2 position;
 
-    // x:[ y:[ z:[], []], []]
-    std::array<
-      std::array<
-        std::array<
-          GAME::Entity,
-          CHUNK_HEIGHT>,
-        CHUNK_SIZE>,
-      CHUNK_SIZE> groundEntities;
+    // x:[ y:[ z:[GAME::Entity, ...], [GAME::Entity, ...]], [...]]
+    std::vector<std::vector<std::vector<GAME::Entity>>> groundEntities;
+
 
     Chunk(int pos_x = 0, int pos_t = 0);
 
