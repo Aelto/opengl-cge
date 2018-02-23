@@ -30,19 +30,19 @@ int main(int argc, char *argv[]) {
 	GAME::Constants constants;
 	GAME::Assets_uv assets_uv;
 	
-	cge::App app(1280, 900);
-	app.open(4, 3, "Opengl game");
+	cge::App * app = cge::App::getInstance(1280, 900);
+	app->open(4, 3, "Opengl game");
 
-	cge::Camera camera(app.width, app.height);
+	cge::Camera * camera = cge::Camera::getInstance(app->width, app->height);
 
-	cge::helper helper;
-	cge::TextManager textManager;
-	textManager.init(app.width, app.height);
+	cge::helper * helper = cge::helper::getInstance();
+	cge::TextManager * textManager = cge::TextManager::getInstance();
+	textManager->init(app->width, app->height);
 
-	GAME::ShaderStorage shaderStorage(app, camera);
+	GAME::ShaderStorage shaderStorage(*app, *camera);
 	GAME::TextureStorage textureStorage;
 
-	GAME::GameInstance gameInstance(&constants, &assets_uv, &app, &camera, &helper, &textManager, &shaderStorage, &textureStorage);
+	GAME::GameInstance gameInstance(&constants, &assets_uv, app, camera, helper, textManager, &shaderStorage, &textureStorage);
 	gameInstance.play();
 
 	return 0;

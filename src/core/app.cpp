@@ -10,10 +10,7 @@ namespace cge {
 		for (auto i = 0; i < MAX_KEYS; i++)
 			keys[i] = false;
 
-		window = nullptr;
-
 	}
-
 
 	App::~App() {
 		App::currentApp = nullptr;
@@ -21,6 +18,16 @@ namespace cge {
 		glfwTerminate();
 	}
 
+	App * App::getInstance() {
+		return App::getInstance(1280, 920);
+	}
+
+	App * App::getInstance(GLuint width, GLuint height) {
+		if (App::currentApp == nullptr)
+			App::currentApp = new App(width, height);
+
+		return App::currentApp;
+	}
 
 	void App::open(int GL_major, int GL_minor, const char * name) {
 

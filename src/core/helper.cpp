@@ -28,6 +28,15 @@ namespace cge {
 
 	}
 
+	helper * helper::instance = nullptr; 
+
+	helper * helper::getInstance() {
+		if (helper::instance == nullptr)
+			helper::instance = new helper();
+
+		return helper::instance;
+	}
+
 	void helper::coutFramerate() {
 
 		std::cout << "fps: " << 1 / delta << std::endl;

@@ -6,10 +6,14 @@
 
 namespace cge {
 	class Camera {
-	public:
+	private:
 		Camera() {};
 		Camera(GLuint width, GLuint height);
+
+	public:
 		~Camera();
+
+		static Camera * instance;
 
 		glm::vec3 Position, Velocity, Front, Up;
 		GLfloat Rotation, MovementSpeed;
@@ -21,6 +25,7 @@ namespace cge {
 		glm::vec2 anchor;
 		GLfloat followSpeed;
 
+		static Camera * getInstance(GLuint width, GLuint height);
 		void updateView();
 		void runFollow(GLfloat delta);
 		float getAbsolutePositionX(float in);

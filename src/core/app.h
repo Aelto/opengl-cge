@@ -8,8 +8,9 @@
 
 namespace cge {
 	class App {
-	public:
+	private:
 		App(GLuint _width, GLuint _height);
+	public:
 		~App();
 
 		/// props
@@ -25,6 +26,8 @@ namespace cge {
 		static App * currentApp;
 		static void keyCallback_dispatch(GLFWwindow* window, int key, int scancode, int action, int mode);
 		static void mouseCallback_dispatch(GLFWwindow* window, double xpos, double ypos);
+		static App * getInstance();
+		static App * getInstance(GLuint width, GLuint height);
 		void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
 		void mouseCallback(GLFWwindow* window, double xpos, double ypos);
 

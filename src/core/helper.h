@@ -4,16 +4,20 @@
 
 namespace cge {
 	class helper {
-	public:
+	private:
 		helper();
+	public:
 		~helper();
 
 		/// props
 		GLfloat lastFrame;
 		GLfloat delta;
 
+		static helper * instance;
+
 		/// methods
 		GLfloat getDelta();
+		static helper * getInstance();
 
 		void coutFramerate();
 	};

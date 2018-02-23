@@ -6,6 +6,8 @@
 
 namespace cge {
 
+	Camera * Camera::instance = nullptr;
+
 	Camera::Camera(GLuint width, GLuint height)
 		: Position(0.0f, 0.0f, 0.0f), Velocity(0.0f, 0.0f, 0.0f), Front(0.0f, 0.0f, -1.0f), Up(0.0f, 1.0f, 0.0f), MovementSpeed(1.0f), Rotation(0.0f), Width(width), Height(height) {
 		view = glm::lookAt(Position, Position + Front, Up);
@@ -15,8 +17,14 @@ namespace cge {
 		followSpeed = 1.0f;
 	}
 
-
 	cge::Camera::~Camera() {}
+
+	Camera * Camera::getInstance(GLuint width, GLuint height) {
+		if (Camera::instance == nullptr)
+			Camera::instance = new Camera(width, height);
+
+		return Camera::instance;
+	}
 
 	void Camera::updateView() {
 

@@ -7,6 +7,15 @@ cge::TextManager::TextManager() {
 	shader.use();
 }
 
+cge::TextManager * cge::TextManager::instance = nullptr;
+
+cge::TextManager * cge::TextManager::getInstance() {
+	if (cge::TextManager::instance == nullptr)
+		cge::TextManager::instance = new cge::TextManager();
+
+	return cge::TextManager::instance;
+}
+
 bool cge::TextManager::init(GLuint width, GLuint height) {
 	shader.use();
 	glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), 0.0f, static_cast<GLfloat>(height));

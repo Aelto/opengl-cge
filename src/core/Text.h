@@ -27,15 +27,24 @@ namespace cge {
 
 	class TextManager {
 	public:
-		TextManager();
 
 		bool init(GLuint width, GLuint height);
+
 		void renderText(std::string & text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 & color);
+
 		Text newText(char* text, GLfloat x = 0, GLfloat y = 0, GLfloat scale = 1, glm::vec3 color = glm::vec3(1, 1, 1));
 
+		static TextManager * getInstance();
+
 	private:
+		TextManager();
+		
+		static TextManager * instance;
+		
 		std::map<GLchar, Character> characters;
+		
 		GLuint VAO, VBO;
+		
 		Shader shader;
 	};
 
