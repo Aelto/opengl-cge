@@ -10,8 +10,6 @@ namespace cge {
 	class Hitbox {
 	public:
 
-		/// props
-
 		/**
 		 * This position is relative to the holder's position,
 		 * a x position equal to 10 will place the hitbox 10 pixels
@@ -24,8 +22,7 @@ namespace cge {
 		 * the size of the rendered sprite
 		 */
 		glm::vec2 size;
-
-		/// methods
+		
 		/**
 		 * Custom constructor with custom size and relative positions
 		 */

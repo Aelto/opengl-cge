@@ -10,16 +10,15 @@ namespace cge {
 	void Texture2D::generate(GLuint width, GLuint height, unsigned char* data) {
 		this->width = width;
 		this->height = height;
-		// Create Texture
+		
 		glBindTexture(GL_TEXTURE_2D, this->ID);
 		glTexImage2D(GL_TEXTURE_2D, 0, this->internalFormat, width, height, 0, this->imageFormat, GL_UNSIGNED_BYTE, data);
-		// Set Texture wrap and filter modes
+		
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, this->wrap_s);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, this->wrap_t);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, this->filterMin);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, /*this->Filter_Max*/GL_NEAREST);
 
-		// Unbind texture
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 

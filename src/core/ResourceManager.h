@@ -15,14 +15,12 @@ namespace cge {
 	class ResourceManager {
 	public:
 
-		/// props
 		/**
 		 * Resource storage
 		 */
 		static std::map<std::string, Shader>    shaders;
 		static std::map<std::string, Texture2D> textures;
 
-		/// methods
 		/**
 		 * Loads (and generates) a shader program from file loading vertex, fragment (and geometry) shader's source code.
 		 * If gShaderFile is not nullptr, it also loads a geometry shader
@@ -52,8 +50,7 @@ namespace cge {
 	private:
 
 		/**
-		 * Private constructor, that is we do not want any actual resource manager objects.
-		 * Its members and functions should be publicly available (static).
+		 * Private constructor
 		 */
 		ResourceManager() {}
 

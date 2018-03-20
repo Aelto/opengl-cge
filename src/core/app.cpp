@@ -9,7 +9,6 @@ namespace cge {
 
 		for (auto i = 0; i < MAX_KEYS; i++)
 			keys[i] = false;
-
 	}
 
 	App::~App() {
@@ -30,7 +29,6 @@ namespace cge {
 	}
 
 	void App::open(int GL_major, int GL_minor, const char * name) {
-
 		glfwInit();
 
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, GL_major);
@@ -68,31 +66,26 @@ namespace cge {
 	App * App::currentApp;
 
 	void App::keyCallback_dispatch(GLFWwindow* window, int key, int scancode, int action, int mode) {
-
 		if (App::currentApp)
 			App::currentApp->keyCallback(window, key, scancode, action, mode);
-
 	}
 
 	void App::mouseCallback_dispatch(GLFWwindow * window, double xpos, double ypos) {
-	
 		if (App::currentApp)
 			App::currentApp->mouseCallback(window, xpos, ypos);
-
 	}
 
 	void App::keyCallback(GLFWwindow * window, int key, int scancode, int action, int mode) {
-
 		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 			glfwSetWindowShouldClose(window, GL_TRUE);
 
 		if (key >= 0 && key < 1024) {
 			if (action == GLFW_PRESS)
 				keys[key] = true;
+
 			else if (action == GLFW_RELEASE)
 				keys[key] = false;
 		}
-
 	}
 
 	void App::mouseCallback(GLFWwindow * window, double xpos, double ypos) {
@@ -101,29 +94,23 @@ namespace cge {
 	}
 
 	int App::shouldClose() {
-
 		return glfwWindowShouldClose(window);
-
 	}
 
 	int App::startLoop() {
-
 		glfwPollEvents();
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		return shouldClose();
-
 	}
 
 	void App::endLoop() {
-
 		glfwSwapBuffers(window);
 		
 		if (keys[GLFW_KEY_ESCAPE])
 			glfwSetWindowShouldClose(window, GL_TRUE);
-
 	}
 
 }

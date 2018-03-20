@@ -1,7 +1,5 @@
 #include "SpriteSheetUV.h"
 
-#include <iostream>
-
 namespace cge {
 	SpriteSheetUV::SpriteSheetUV() {
 

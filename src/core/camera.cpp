@@ -27,19 +27,15 @@ namespace cge {
 	}
 
 	void Camera::updateView() {
-
 		view = glm::lookAt(Position, Position + Front, Up);
 		//view = glm::rotate(glm::lookAt(Position, Position + Front, Up), 0.0f, glm::vec<3, float>(0.0f, 0.0f, 1.0f));
-
 	}
 
 	void Camera::runFollow(GLfloat delta) {
-
 		if (followedPosition != nullptr) {
 			Position.x += (followedPosition->x - Position.x - Width * anchor.x) * followSpeed * delta;
 			Position.y += (followedPosition->y - Position.y - Height * anchor.y) * followSpeed * delta;
 		}
-
 	}
 
 	float Camera::getAbsolutePositionX(float in) {

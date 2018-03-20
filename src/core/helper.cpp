@@ -4,16 +4,12 @@
 
 namespace cge {
 
-	helper::helper() {
-
-		lastFrame = GLfloat(glfwGetTime());
-
-	}
+	helper::helper():
+		lastFrame(GLfloat(glfwGetTime())) {}
 
 	helper::~helper() {}
 
 	GLfloat helper::getDelta() {
-
 		// use delta as a temporary value holder
 		delta = lastFrame;
 
@@ -25,7 +21,6 @@ namespace cge {
 		delta = lastFrame - delta;
 
 		return delta;
-
 	}
 
 	helper * helper::instance = nullptr; 
@@ -38,9 +33,7 @@ namespace cge {
 	}
 
 	void helper::coutFramerate() {
-
 		std::cout << "fps: " << 1 / delta << std::endl;
-
 	}
 
 }

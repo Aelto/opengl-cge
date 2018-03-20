@@ -1,7 +1,5 @@
 #include "SpriteSheet.h"
 
-#include <iostream>
-
 namespace cge {
 
 	SpriteSheet::SpriteSheet(glm::vec2 pos, glm::vec2 _size, cge::Texture2D * _texture, SpriteSheetUV _spriteSheetUV)

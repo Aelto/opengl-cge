@@ -17,9 +17,9 @@ namespace cge {
 		SpriteAnimation(glm::vec2 pos, glm::vec2 _size, cge::Texture2D * _texture, AnimationsUV _animationsUV);
 
 		/**
-		* Give to the suppplied SpriteBatch enough informations
-		* to be able to create vertices for this object
-		*/
+		 * Give to the suppplied SpriteBatch enough informations
+		 * to be able to create vertices for this object
+		 */
 		virtual void drawBatch(cge::SpriteBatch & spriteBatch);
 
 		virtual void draw(cge::SpriteRenderer & spriteRenderer);
