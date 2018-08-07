@@ -16,7 +16,7 @@ cge::TextManager * cge::TextManager::getInstance() {
 	return cge::TextManager::instance;
 }
 
-bool cge::TextManager::init(GLuint width, GLuint height) {
+cge::TextManager * cge::TextManager::init(GLuint width, GLuint height) {
 	shader.use();
 
 	glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), 0.0f, static_cast<GLfloat>(height));
@@ -25,13 +25,13 @@ bool cge::TextManager::init(GLuint width, GLuint height) {
 	FT_Library ft;
 	if (FT_Init_FreeType(&ft)) {
 		std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
-		return false;
+		return nullptr;
 	}
 
 	FT_Face face;
 	if (FT_New_Face(ft, "arial.ttf", 0, &face)) {
 		std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
-		return false;
+		return nullptr;
 	}
 
 	FT_Set_Pixel_Sizes(face, 0, 14); // font size
@@ -88,7 +88,7 @@ bool cge::TextManager::init(GLuint width, GLuint height) {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	return true;
+	return this;
 }
 
 void cge::TextManager::renderText(std::string & text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 & color) {

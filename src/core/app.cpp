@@ -28,7 +28,7 @@ namespace cge {
 		return App::currentApp;
 	}
 
-	void App::open(int GL_major, int GL_minor, const char * name) {
+	App * App::open(int GL_major, int GL_minor, const char * name) {
 		glfwInit();
 
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, GL_major);
@@ -61,6 +61,7 @@ namespace cge {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+		return this;
 	}
 
 	App * App::currentApp;
@@ -86,6 +87,12 @@ namespace cge {
 			else if (action == GLFW_RELEASE)
 				keys[key] = false;
 		}
+	}
+
+	App * App::hideCursor() {
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
+		return this;
 	}
 
 	void App::mouseCallback(GLFWwindow * window, double xpos, double ypos) {

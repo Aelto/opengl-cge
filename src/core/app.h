@@ -30,7 +30,8 @@ namespace cge {
 		void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
 		void mouseCallback(GLFWwindow* window, double xpos, double ypos);
 
-		void open(int GL_major, int GL_minor, const char * name);
+		App * open(int GL_major, int GL_minor, const char * name);
+		App * hideCursor();
 
 		int shouldClose();
 		int startLoop();

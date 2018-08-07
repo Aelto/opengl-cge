@@ -28,7 +28,7 @@ namespace cge {
 	class TextManager {
 	public:
 
-		bool init(GLuint width, GLuint height);
+		TextManager * init(GLuint width, GLuint height);
 
 		void renderText(std::string & text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 & color);
 
