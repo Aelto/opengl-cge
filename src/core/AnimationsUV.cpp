@@ -3,7 +3,7 @@
 namespace cge {
 
 	bool AnimationsUV::setCurrentAnimation(std::string & name) {
-		if (name != (std::string)"__no_animation__" && hasAnimation(name)) {
+		if (name != (std::string)"__no_animation__" && currentAnimation != name && hasAnimation(name)) {
 			currentAnimation = name; // copy
 
 			currentColumn = animationsMap[name].beginX;
