@@ -6,7 +6,10 @@ I'll use this repository to control and share my progress on my understanding of
 
 # Building
 I still have to look into that.
-The project currently uses Visual Studio 2015 and opengl 4.3
+The project currently uses opengl 4.3, [glfw](http://www.glfw.org/), [glew](http://glew.sourceforge.net/) and [SOIL](http://www.lonesock.net/soil.html). I currently use a home built script to generate the command used to build the engine using msvc compiler, the latest generated command is
+```bash
+cl /MD /EHcs /std:c++17 -c /DGLEW_STATIC /opengl-cge/src/cge.cpp /opengl-cge/src/core/app.cpp /opengl-cge/src/core/helper.cpp /opengl-cge/src/core/camera.cpp /opengl-cge/src/core/Camera.cpp /opengl-cge/src/core/ResourceManager.cpp /opengl-cge/src/core/Texture.cpp /opengl-cge/src/core/Shader.cpp /opengl-cge/src/core/SpriteBatch.cpp /opengl-cge/src/core/SpriteRenderer.cpp /opengl-cge/src/core/Text.cpp /opengl-cge/src/core/Sprite.cpp /opengl-cge/src/core/Hitbox.cpp /opengl-cge/src/core/SpriteSheetUV.cpp /opengl-cge/src/core/SpriteSheet.cpp /opengl-cge/src/core/AnimationsUV.cpp /opengl-cge/src/core/SpriteAnimation.cpp /opengl-cge/deps/libs/glfw3.lib /opengl-cge/deps/libs/freetype28.lib /opengl-cge/deps/libs/glew32s.lib /opengl-cge/deps/libs/SOIL.lib gdi32.lib opengl32.lib kernel32.lib user32.lib shell32.lib /I /opengl-cge/deps/includes && lib cge.obj app.obj helper.obj camera.obj Camera.obj ResourceManager.obj Texture.obj Shader.obj SpriteBatch.obj SpriteRenderer.obj Text.obj Sprite.obj Hitbox.obj SpriteSheetUV.obj SpriteSheet.obj AnimationsUV.obj SpriteAnimation.obj
+```
 
 # Features
 
