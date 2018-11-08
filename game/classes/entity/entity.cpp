@@ -1,8 +1,6 @@
 #include "Entity.h"
 
-#include <iostream>
-
-namespace GAME {
+namespace game {
 	Entity::Entity()
 		: velocity(0.0f, 0.0f), acceleration(0.0f, 0.0f) {}
 
@@ -12,14 +10,8 @@ namespace GAME {
 	}
 
 	void Entity::mainBehavior(GLfloat delta) {
-
-		if (velocity.x < 0)
-			inverted = !isSpriteInverted;
-		else inverted = isSpriteInverted;
-
 		applyAcceleration(delta);
 		applyVelocity(delta);
-
 	}
 
 	void Entity::applyAcceleration(const GLfloat delta) {
@@ -51,4 +43,3 @@ namespace GAME {
 		velocity *= factor;
 	}
 }
-

@@ -9,7 +9,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-namespace GAME {
+namespace game {
 	class Entity : public cge::SpriteAnimation {
 	public:
 		Entity();
@@ -49,6 +49,3 @@ namespace GAME {
 		void applyFriction(const GLfloat factor);
 	};
 }
-
-
-
